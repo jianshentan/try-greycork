@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Try Greycork on Mobile</title>
+    		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="Index,Follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    
+    <!-- custom css -->
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+ 	  <!-- load jquery minified js -->
+		<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- load bootstrap minified js -->
+		<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- load load-image js minified -->
+		<script src="/javascripts/load-image.all.min.js"></script>
+		
+		<!-- load custom gestures script -->
+		<script src="/javascripts/gestures.js"></script>
+		<!-- load custom canvas script -->
+		<script src="/javascripts/canvas.js"></script>
+		
+		<!-- load platform/scream/brim to manage minimal ui 
+		<script src="/bower_components/platform.js/platform.js"></script>
+		<script src="/bower_components/scream/dist/scream.js"></script>
+		<script src="/bower_components/brim/dist/brim.js"></script>
+		<script>
+		  // user is using Safari
+			var scream, brim;
+		  if (platform.os.family == 'iOS' && parseInt(platform.os.version, 10) >= 8) {
+			  if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+			    window.addEventListener('DOMContentLoaded', function () {
+				    scream = gajus.Scream({
+				      width: {
+				        portrait: 320,
+				        landscape: 568
+				      }
+				    });
+				    
+				    brim = gajus.Brim({
+				      viewport: scream
+				    });
+				    
+				    brim.on('viewchange', function(e) {
+				    	document.body.className = e.viewName;
+				    });
+			    });
+			  }
+		  }
+		</script>    
+		-->
+  </head>
+  
+  <body>
+  	
+			<div id="main">
+				<!-- Top -->
+				<div id="editor-top">
+					
+				</div>
+				
+				<!-- canvas -->
+				<div id="editor-middle">
+					
+				</div>
+				
+	  		<!-- Take picture button -->
+	  		<div id="editor-bottom">
+		  		<label id="camera-container">
+		  		  <img src="/images/camera.png" width="42px" height="42px"/>
+		        <input type="file" accept="image/*" capture="camera" id="camera">
+		  		</label>
+		  		<div id="save">save</div>
+	  		</div>
+	  		
+	      <img id="frame" width="0" height="0">
+	  	</div>
+	  <!--
+		<div id="brim-main">
+    </div>
+    
+ 		<div id="brim-mask">
+ 		  <p>Hello, I am the <b>mask</b> element.</p>
+      <p>My purpose is to hide the <b>main</b> element when browser is not in the minimal view and give user instructions how to enter the minimal view.</p>
+      <p>Behind me is the <b>treadmill</b> element. It has been generated dynamically. It is used to give user plenty of space to scroll down.</p>
+      <p>Scroll down to hide me.</p>
+		</div>
+		-->
+
+  </body>
+
+</html>

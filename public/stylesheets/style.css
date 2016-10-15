@@ -1,0 +1,106 @@
+body {
+  overflow-x: hidden; 
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  padding: 0px;
+}
+#main {
+  width: 100%;
+}
+#editor-top {
+  position: relative;
+  height: 10vh;
+  width: 100vw;
+  background-color: yellow;
+  z-index: 900;
+}
+#editor-middle {
+  position: relative;
+  height: 70vh;
+  width: 100vw;
+  background-color: blue;
+}
+#editor-bottom {
+  position: relative;
+  height: 20vh;
+  width: 100vw;
+  background-color: pink;
+  z-index: 900;
+}
+#canvas {
+  width: 100vw;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  z-index: 100;
+  user-drag: none; 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+.sticker-container {
+  position: absolute;
+  overflow-x: hidden;  
+  left: 0px;
+  top: 0px;
+  z-index: 110; 
+}
+#sticker {
+  z-index: 111;
+}
+
+#brim-mask, #brim-main {
+  color: #fff;
+  display: none; 
+}
+#brim-mask {
+  background: #663399; 
+  pointer-events: none;
+}
+  
+/* Editor bottom */
+#save {
+  background-color: white;
+  color: red;
+  padding: 10px 20px;
+  border: 2px solid red;
+  display: inline-block;
+  position: absolute;
+  right: 5vw;
+  bottom: 5vw;
+}
+#camera-container {
+  overflow: hidden;
+  z-index: 120;
+  position: absolute;
+  left: 50%;
+  bottom: 5vw;
+  transform: translateX(-50%);
+  color: red;
+  border: 2px solid red;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  line-height: 46px;
+  background-color: white;
+  padding: 10px 20px;
+}
+#camera-container img {
+  margin-left: -6px;
+}
+#camera-container [type=file] {
+  cursor: inherit;
+  display: block;
+  font-size: 999px;
+  filter: alpha(opacity=0);
+  min-height: 100%;
+  min-width: 100%;
+  opacity: 0;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  top: 0;
+}
