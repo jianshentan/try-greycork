@@ -32,10 +32,9 @@ $(document).ready(function() {
    **/
   $(window).on("canvasReady", function(e, p1, p2) {
 
-    var stickerContainer1 = document.createElement('div');
-    stickerContainer1.className = "sticker-container";
-    $("#main").append($(stickerContainer1));
-    var stickerCanvas = new createSticker("../images/test.png", stickerContainer1);
+    var sticker1 = new Sticker("../images/test.png", "#main");
+    var sticker2 = new Sticker("../images/camera.png", "#main");
+    
     
     // TODO using 'globalCompositeOperation', select the appropriate XOR effect
     //      join the sticker with canvas to produce an image
@@ -43,9 +42,11 @@ $(document).ready(function() {
       var destinationCanvas = document.getElementById('canvas');
       var destinationCtx = destinationCanvas.getContext('2d');
       destinationCtx.globalCompositeOperation = 'source-atop';
-      destinationCtx.drawImage(stickerCanvas, 0, 0);  
+      console.log(sticker1);
+      destinationCtx.drawImage(sticker1.getCanvas(), 0, 0);  
+      sticker1.destroy();
+      //destinationCtx.drawImage(sticker2.getStickerCanvas(), 0, 0);  
     });
-    
     
     
     /* TEST
