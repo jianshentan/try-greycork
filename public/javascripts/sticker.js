@@ -22,7 +22,8 @@ Sticker = function(imageSrc, containerElementSelector) {
    * containerElementSelector - the element to load the sticker into
    **/
    
-  this.stickerCanvas = null;
+  //this.stickerCanvas = null;
+  var sticker = null;
    
   var input = {
       dragStartX: 0, dragStartY:0,
@@ -32,7 +33,6 @@ Sticker = function(imageSrc, containerElementSelector) {
       touchStartDistance: 0,
       touchStartAngle: 0
   };
-  var plateContainer;
   var prefixedTransform;
   var currentScale = 1;
   var currentRotation = 0;
@@ -40,32 +40,26 @@ Sticker = function(imageSrc, containerElementSelector) {
   var posY = 0;
   var velocityX = 0;
   var velocityY = 0;
-  var containerWidth = $(window).width(); // ? 
-  var containerHeight = $(window).height(); // ?
-  var plateWidth = 400; // ?
-  var plateHeight = 400; // ?
   var maxScale = 1.5;
   var minScale = 0.5;
-   
-  // add sticker to the container element
-  plateContainer = document.createElement('div');
-  plateContainer.className = 'sticker-container';
-  $(containerElementSelector).append(plateContainer); 
-  console.log(plateContainer);
   
   // create sticker canvas
-  this.stickerCanvas = document.createElement('canvas');
-  this.stickerCanvas.className = 'sticker';
-  this.stickerCanvas.id = 'sticker';
-  var that = this;
+  sticker = document.createElement('canvas');
+  sticker.className = 'sticker';
+  sticker.id = 'sticker';
+  
+  // add sticker canvas to editor element
+  var containerElement = $(containerElementSelector);
+  containerElement.append(sticker); 
+  
+  // load image
   var img = new Image();
   img.onload = function() {
-    that.stickerCanvas.width = this.width;    
-    that.stickerCanvas.height = this.height;    
-    var ctx = that.stickerCanvas.getContext('2d');
+    sticker.width = this.width;    
+    sticker.height = this.height;    
+    var ctx = sticker.getContext('2d');
     ctx.drawImage(img, 0, 0, 
-      that.stickerCanvas.width, that.stickerCanvas.height);
-    plateContainer.appendChild(that.stickerCanvas);
+      sticker.width, sticker.height);
   };
   img.src = imageSrc;
   
@@ -78,16 +72,36 @@ Sticker = function(imageSrc, containerElementSelector) {
   // listeners
   if (window.PointerEvent) {
     input.pointers=[];
-    plateContainer.addEventListener('pointerdown', pointerDownHandler, false);
+    sticker.addEventListener('pointerdown', pointerDownHandler, false);
   } else {
-    plateContainer.addEventListener('touchstart', onTouchStart);
-    plateContainer.addEventListener('mousedown', onPlateMouseDown);
+    sticker.addEventListener('touchstart', onTouchStart);
+    sticker.addEventListener('mousedown', onPlateMouseDown);
   }
   
   posX = 0;
   posY = 0;
   
   onAnimationFrame();
+  
+  this.getPos = function() {
+    return [posX, posY];
+  };
+  
+  this.getSticker = function() {
+    return sticker;  
+  };
+  
+  this.getContainer = function() {
+    return containerElement;  
+  };
+  
+  this.getScale = function() {
+    return currentScale;  
+  };
+  
+  this.getRotation = function() {
+    return currentRotation;  
+  };
   
   function onAnimationFrame() {
     requestAnimationFrame(onAnimationFrame);
@@ -98,10 +112,10 @@ Sticker = function(imageSrc, containerElementSelector) {
     posX += velocityX;
     posY += velocityY;
     
-    plateContainer.style[prefixedTransform] = 'translate('+posX+'px,'+posY+'px) rotate('+currentRotation+'deg) scale('+currentScale+') translateZ(0)';
+    sticker.style[prefixedTransform] = 'translate('+posX+'px,'+posY+'px) rotate('+currentRotation+'deg) scale('+currentScale+') translateZ(0)';
     
-    velocityX = velocityX * 0.8;
-    velocityY = velocityY * 0.8;
+    velocityX = velocityX * 0.10;
+    velocityY = velocityY * 0.10;
     
     input.dragDX = 0;
     input.dragDY = 0;
@@ -113,6 +127,7 @@ Sticker = function(imageSrc, containerElementSelector) {
   	document.addEventListener('mouseup', onDocumentMouseUp);
   	document.addEventListener('mousemove', onDocumentMouseMove);
   	if(event.shiftKey === true) {
+  	  console.log("shift1");
   		//assume second touchpoint is in middle of screen
   		handleGestureStart(posX, posY, event.clientX, event.clientY);
   	} else {
@@ -123,6 +138,7 @@ Sticker = function(imageSrc, containerElementSelector) {
   
   function onDocumentMouseMove(event) {
   	if(event.shiftKey) {
+  	  console.log("shift2");
   		handleGesture(posX, posY, event.clientX, event.clientY); 
   	} else {
   		handleDragging(event.clientX, event.clientY);
@@ -300,12 +316,23 @@ Sticker = function(imageSrc, containerElementSelector) {
 
 };
 
-Sticker.prototype.getCanvas = function() {
-  return this.stickerCanvas;  
+Sticker.prototype.getSticker = function() {
+  return this.getSticker();
 };
 
-Sticker.prototype.destroy = function() {
-  this.stickerCanvas = null;
+Sticker.prototype.getPosition = function() {
+  return { 
+    top: this.getPos()[1],
+    left: this.getPos()[0]
+  }
+};
+
+Sticker.prototype.getScale = function() {
+  return this.getScale();  
+};
+
+Sticker.prototype.getRotation = function() {
+  return this.getRotation();
 };
 
 
