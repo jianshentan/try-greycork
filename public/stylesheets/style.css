@@ -43,9 +43,11 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
+/*
 #savedImg {
-  /*width: 100vw;*/
+  width: 100vw;
 }
+*/
 .sticker {
   position: absolute;
   overflow-x: hidden;  
