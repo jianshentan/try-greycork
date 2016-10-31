@@ -49,6 +49,10 @@ $(document).ready(function() {
         $(canvas).css("width", ($(canvas).width() / sizeMultiplier) + "px")
         //$(canvas).css("height", ($(canvas).height() / sizeMultiplier) + "px")
         
+        $(canvas).css("left", "50%");
+        $(canvas).css("top", "50%");
+        $(canvas).css("transform", "translateX(-50%) translateY(-50%)");
+        
         // canvas is ready!
         $(window).trigger("canvasReady", [ /* param1, param2 */])
       }, options);
@@ -80,8 +84,15 @@ $(document).ready(function() {
         destinationCtx.save();
 
         // set position / scale
+        // offsets are to take into account that the destination canvas image is
+        // centered in the 'editor-middle' div
+        var offsetTop = $(destinationCanvas).offset().top - $("#"+EDITOR_CONTAINER_ID).offset().top;
+        var offsetLeft = $(destinationCanvas).offset().left;
         destinationCtx.scale(sizeMultiplier, sizeMultiplier);
-        destinationCtx.translate(imgCanvasPos.left, imgCanvasPos.top);
+        destinationCtx.translate(imgCanvasPos.left - offsetLeft, imgCanvasPos.top - offsetTop);
+        
+        //destinationCtx.translate(offsetLeft, offsetTop);
+        
         // set rotation/scale
         destinationCtx.translate(imgCanvas.width/2, imgCanvas.height/2);
         destinationCtx.rotate(imgCanvasRotation * Math.PI/180);
@@ -104,6 +115,11 @@ $(document).ready(function() {
       img.src = dataURL;
       $(img).css("width", $(destinationCanvas).width());
       $(img).css("height", $(destinationCanvas).height());
+      
+      $(img).css("position", "absolute");
+      $(img).css("left", "50%");
+      $(img).css("top", "50%");
+      $(img).css("transform", "translateX(-50%) translateY(-50%)");
       
       editor.append(img);
       
