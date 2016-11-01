@@ -1,13 +1,15 @@
 /* globals $ */
+   
+var CAMERA_BUTTON_ID = 'camera';
+var SAVE_BUTTON_ID = 'save';
+var EDITOR_CONTAINER_ID = 'editor-middle';
+var CANVAS_ID = 'canvas';
+var SAVED_IMAGE_ID = 'saved-img';
+var TRASH_ICON_ID = 'trash-icon';
+var CAMERA_ICON_ID = 'camera-icon';
 
 $(document).ready(function() {
-   
-  var CAMERA_BUTTON_ID = 'camera';
-  var SAVE_BUTTON_ID = 'save';
-  var EDITOR_CONTAINER_ID = 'editor-middle';
-  var CANVAS_ID = 'canvas';
-  var SAVED_IMAGE_ID = 'saved-img';
- 
+
   var editor = $("#"+EDITOR_CONTAINER_ID);
   var sizeMultiplier = 2;
  
@@ -49,17 +51,23 @@ $(document).ready(function() {
         $(canvas).css("width", ($(canvas).width() / sizeMultiplier) + "px")
         //$(canvas).css("height", ($(canvas).height() / sizeMultiplier) + "px")
         
+        // image offsets to keep canvas centered
         $(canvas).css("left", "50%");
         $(canvas).css("top", "50%");
         $(canvas).css("transform", "translateX(-50%) translateY(-50%)");
         
         // canvas is ready!
-        $(window).trigger("canvasReady", [ /* param1, param2 */])
+        $(window).trigger("imageUploaded", [ /* param1, param2 */])
       }, options);
     });
   });
  
-  $(window).on("canvasReady", function(e, p1, p2) {
+  $(window).on("imageUploaded", function(e, p1, p2) {
+
+    // update buttons
+    $("#"+SAVE_BUTTON_ID).addClass("active"); // show save button
+    $("#"+TRASH_ICON_ID).addClass("active"); // show trash icon
+    $("#"+CAMERA_ICON_ID).removeClass("active"); // hide camera icon
 
     var stickerStack = [];
     var sticker1 = new Sticker("../images/square.png", "#"+EDITOR_CONTAINER_ID);
@@ -84,15 +92,14 @@ $(document).ready(function() {
         destinationCtx.save();
 
         // set position / scale
-        // offsets are to take into account that the destination canvas image is
-        // centered in the 'editor-middle' div
+        destinationCtx.scale(sizeMultiplier, sizeMultiplier);
+        destinationCtx.translate(imgCanvasPos.left, imgCanvasPos.top);
+
+        // sticker offsets to take into account that canvas is centered
         var offsetTop = $(destinationCanvas).offset().top - $("#"+EDITOR_CONTAINER_ID).offset().top;
         var offsetLeft = $(destinationCanvas).offset().left;
-        destinationCtx.scale(sizeMultiplier, sizeMultiplier);
-        destinationCtx.translate(imgCanvasPos.left - offsetLeft, imgCanvasPos.top - offsetTop);
-        
-        //destinationCtx.translate(offsetLeft, offsetTop);
-        
+        destinationCtx.translate(-offsetLeft, -offsetTop);
+
         // set rotation/scale
         destinationCtx.translate(imgCanvas.width/2, imgCanvas.height/2);
         destinationCtx.rotate(imgCanvasRotation * Math.PI/180);
@@ -116,6 +123,7 @@ $(document).ready(function() {
       $(img).css("width", $(destinationCanvas).width());
       $(img).css("height", $(destinationCanvas).height());
       
+      // center saved image
       $(img).css("position", "absolute");
       $(img).css("left", "50%");
       $(img).css("top", "50%");

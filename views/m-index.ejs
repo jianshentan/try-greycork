@@ -12,8 +12,9 @@
     
     <!-- custom css -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- bootstrap css
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'>
     
  	  <!-- load jquery minified js -->
 		<script src="/bower_components/jquery/dist/jquery.min.js"></script>
@@ -63,7 +64,6 @@
 			<div id="main">
 				<!-- Top -->
 				<div id="editor-top">
-					
 				</div>
 				
 				<!-- canvas -->
@@ -72,13 +72,18 @@
 					<img id="saved-img"/>
 				</div>
 				
-	  		<!-- Take picture button -->
-	  		<div id="editor-bottom">
-		  		<label id="camera-container">
-		  		  <img src="/images/camera.png" width="42px" height="42px"/>
+        <!-- bottom -->
+        <div id="editor-bottom"> <!-- height 20hv -->
+
+	  		  <!-- Take picture button -->
+		  		<label id="camera-button" class="editor-bottom-button">
+		  		  <img src="/images/camera.png" width="30px" height="30px" id="camera-icon" class="active"/>
+		  		  <img src="/images/trash.png" width="30px" height="30px" id="trash-icon"/>
 		        <input type="file" accept="image/*" capture="camera" id="camera">
 		  		</label>
-		  		<div id="save">save</div>
+
+          <div id="save" class="editor-bottom-button"></div>
+
 	  		</div>
 	  		
 	      <img id="frame" width="0" height="0" style="display:none;">
