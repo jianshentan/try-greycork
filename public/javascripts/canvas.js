@@ -1,13 +1,14 @@
 /* globals $ */
 /* globals loadImage */
    
-var CAMERA_BUTTON_ID = 'camera';
+var CAMERA_ID = 'camera';
+var CAMERA_BUTTON_ID = 'camera-button';
 var SAVE_BUTTON_ID = 'save-button';
 var STICKER_BUTTON_ID = 'sticker-button';
 var EDITOR_CONTAINER_ID = 'editor-middle';
 var CANVAS_ID = 'canvas';
 var SAVED_IMAGE_ID = 'saved-img';
-var TRASH_ICON_ID = 'trash-icon';
+var TRASH_BUTTON_ID = 'trash-button';
 var CAMERA_ICON_ID = 'camera-icon';
 var STICKER_MENU_ID = 'sticker-menu';
 var STICKER_MENU_BACK_ID = 'sticker-menu-bar-back';
@@ -25,7 +26,7 @@ $(document).ready(function() {
    **/
    
   var editor = $("#"+EDITOR_CONTAINER_ID);
-  var camera = document.getElementById(CAMERA_BUTTON_ID);
+  var camera = document.getElementById(CAMERA_ID);
   
   camera.addEventListener('change', function(e) {
     var file = e.target.files[0]; 
@@ -109,14 +110,9 @@ $(document).ready(function() {
 $(window).on("uploadImage", function(e, p1, p2) {
   // update buttons
   $("#"+SAVE_BUTTON_ID).addClass("active"); // show save button
-  $("#"+TRASH_ICON_ID).addClass("active"); // show trash icon
-  $("#"+CAMERA_ICON_ID).removeClass("active"); // hide camera icon
+  $("#"+TRASH_BUTTON_ID).addClass("active"); // show trash icon
+  $("#"+CAMERA_BUTTON_ID).removeClass("active"); // hide camera icon
   $("#"+STICKER_BUTTON_ID).addClass("active"); // show sticker button
-
-  // var sticker1 = new Sticker("../images/stickers/square.png", "#"+EDITOR_CONTAINER_ID);
-  // var sticker2 = new Sticker("../images/camera.png", "#"+EDITOR_CONTAINER_ID);
-  // stickerStack.push(sticker1);
-  // stickerStack.push(sticker2);
   
   // Sticker Button on click
   $("#"+STICKER_BUTTON_ID).click(function() {
@@ -126,6 +122,11 @@ $(window).on("uploadImage", function(e, p1, p2) {
   // Save Button on click
   $("#"+SAVE_BUTTON_ID).click(function() {
     $(window).trigger("saveImage")
+  });
+  
+  // Trash Button on click
+  $("#"+TRASH_BUTTON_ID).click(function() {
+    $(window).trigger("deleteImage");  
   });
  
 });
@@ -145,9 +146,9 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
     $("."+STICKER_ICON_CLASS).each(function() {
       $(this).unbind('click');
       $(this).one('click', function(){
+        // add new sticker to canvas
         var path = $(this).attr("src");
         stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
-        console.log(stickerStack);
         $(window).trigger("hideStickerMenu")
       });
     });
@@ -224,3 +225,29 @@ $(window).on("saveImage", function(e) {
   
   $("#"+SAVE_BUTTON_ID).off();
 });
+
+/**
+ * EVENT: 'deleteImage'
+ **/ 
+$(window).on("deleteImage", function(e, p1, p2) {
+  
+  // reset canvas
+  var canvas = document.getElementById(CANVAS_ID);
+  $(canvas).css("width", "100vw")
+  $(canvas).remove();
+  $("#"+EDITOR_CONTAINER_ID).append($("<canvas id='canvas'></canvas>"));
+  
+  // empty sticker stack and delete each sticker
+  for (var i in stickerStack) {
+    stickerStack[i].deleteSticker(); 
+  }
+  stickerStack = [];
+  
+  // hide sticker-menu-button, trash-button and save-button, but show camera-button
+  $("#"+SAVE_BUTTON_ID).removeClass("active"); // show save button
+  $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
+  $("#"+CAMERA_BUTTON_ID).addClass("active"); // hide camera icon
+  $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
+ 
+});
+ 

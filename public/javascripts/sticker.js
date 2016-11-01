@@ -335,7 +335,9 @@ Sticker.prototype.getRotation = function() {
   return this.getRotation();
 };
 
-
+Sticker.prototype.deleteSticker = function() {
+  $(this.getSticker()).remove();
+}
 
 
 
