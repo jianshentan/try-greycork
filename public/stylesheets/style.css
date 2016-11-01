@@ -16,9 +16,11 @@ body {
   position: relative;
   height: 0vh;
   width: 100vw;
-  z-index: 900;
-  /* border-bottom: 2px solid red; */
   background-color: white;
+  /*
+  z-index: 200;
+  border-bottom: 2px solid red; 
+  */
 }
 #editor-middle {
   position: relative;
@@ -27,11 +29,64 @@ body {
   background-color: white;
 }
 #editor-bottom {
-  border-top: 2px solid red;
+  /* border-top: 2px solid red; */
   position: relative;
   height: 20vh;
   width: 100vw;
-  z-index: 900;
+  z-index: 200;
+}
+
+/**
+ * ------------  Sticker Menu -------------
+ **/
+#sticker-menu {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.8);
+  z-index: 300;
+  display: none;
+}
+#sticker-menu.active {
+  display: block;
+}
+#sticker-menu-bar {
+  height: 10vh;
+  color: white;
+  line-height: 10vh;
+  text-align: center;
+  border-bottom: 1px solid white;
+}
+#sticker-menu-bar-back {
+  position: absolute;
+  left: 5vw;
+  line-height: 10vh;
+}
+#sticker-menu-bar-back img {
+  height: 10vw;
+}
+#sticker-menu-stickers {
+  padding-left:5vw;
+  padding-right:5vw; 
+  overflow-y: scroll;
+  height: 90vh;
+}
+.sticker-menu-row {
+  height: 50vw;
+  display: flex;
+  align-items: center;
+  margin-left: inherit !important;
+  margin-right: inherit !important;
+}
+.sticker-menu-col {
+  text-align: center;  
+}
+.sticker-icon {
+  width: 30vw;
+  display: block;
+  margin: 0 auto;
 }
 
 /**
@@ -52,11 +107,6 @@ body {
   -webkit-user-select: none;
   -ms-user-select: none;
 }
-/*
-#savedImg {
-  width: 100vw;
-}
-*/
 .sticker {
   position: absolute;
   overflow-x: hidden;  
@@ -82,18 +132,6 @@ body {
  * --------- Editor - Bottom ----------
  **/
 
-/*
-#save {
-  background-color: white;
-  color: red;
-  padding: 10px 20px;
-  border: 2px solid red;
-  display: inline-block;
-  position: absolute;
-  right: 5vw;
-  bottom: 5vw;
-}
-  */
 .editor-bottom-button {
   overflow: hidden;
   z-index: 120;
@@ -104,14 +142,24 @@ body {
   height: 14vw;
   background-color: pink;
 }
-#save {
+#sticker-button {
+  position: absolute;
+  left: 10vw;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+}
+#sticker-button.active {
+  display: block;
+}
+#save-button {
   position: absolute;
   right: 10vw;
   top: 50%;
   transform: translateY(-50%);
   display: none;
 }
-#save.active {
+#save-button.active {
   display: block;
 }
 #camera-button {

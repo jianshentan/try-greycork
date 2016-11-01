@@ -24,7 +24,6 @@
 		<script src="/javascripts/load-image.all.min.js"></script>
 		
 		<!-- load custom gestures script -->
-		<!--<script src="/javascripts/gestures.js"></script>-->
 		<script src="/javascripts/sticker.js"></script>
 		<!-- load custom canvas script -->
 		<script src="/javascripts/canvas.js"></script>
@@ -75,6 +74,9 @@
         <!-- bottom -->
         <div id="editor-bottom"> <!-- height 20hv -->
 
+					<!-- add sticker button -->
+          <div id="sticker-button" class="editor-bottom-button"></div>
+
 	  		  <!-- Take picture button -->
 		  		<label id="camera-button" class="editor-bottom-button">
 		  		  <img src="/images/camera.png" width="30px" height="30px" id="camera-icon" class="active"/>
@@ -82,8 +84,37 @@
 		        <input type="file" accept="image/*" capture="camera" id="camera">
 		  		</label>
 
-          <div id="save" class="editor-bottom-button"></div>
+					<!-- save image button -->
+          <div id="save-button" class="editor-bottom-button"></div>
 
+	  		</div>
+	  		
+	  		<!-- sticker -->
+	  		<div id="sticker-menu">
+	  			<div id="sticker-menu-bar">
+	  				<div id="sticker-menu-bar-back">
+	  					<img src="/images/camera.png">
+	  				</div>
+	  				<div id="sticker-menu-bar-label">Tap to select a sticker</div>
+	  			</div>
+	  			<div id="sticker-menu-stickers">
+	  				<!-- 
+	  				
+	  				This part is generated in canvas.js
+	  				The structure is as follows:
+	  				
+	  			  <div class="row sticker-menu-row">
+	        		<div class="col-xs-6 sticker-menu-col">
+	        			<img class="sticker-icon" src="/images/stickers/square.png"/>
+	        		</div>
+	        		<div class="col-xs-6 sticker-menu-col">
+	        			<img class="sticker-icon" src="/images/stickers/test.png"/>
+	        		</div>
+	        	</div>
+	        	....
+	        	
+	        	-->
+	        </div>
 	  		</div>
 	  		
 	      <img id="frame" width="0" height="0" style="display:none;">
