@@ -60,6 +60,10 @@ Sticker = function(imageSrc, containerElementSelector) {
     var ctx = sticker.getContext('2d');
     ctx.drawImage(img, 0, 0, 
       sticker.width, sticker.height);
+      
+    // place image in center
+    posX = containerElement.width()/2 - sticker.width/2;
+    posY = containerElement.height()/2 - sticker.height/2;
   };
   img.src = imageSrc;
   
@@ -77,9 +81,6 @@ Sticker = function(imageSrc, containerElementSelector) {
     sticker.addEventListener('touchstart', onTouchStart);
     sticker.addEventListener('mousedown', onPlateMouseDown);
   }
-  
-  posX = 0;
-  posY = 0;
   
   onAnimationFrame();
   
