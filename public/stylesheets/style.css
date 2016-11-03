@@ -11,6 +11,8 @@ body {
 }
 #main {
   width: 100%;
+  background-image: url("../images/bg.png");
+  background-repeat: repeat;
 }
 #editor-top {
   position: relative;
@@ -106,7 +108,8 @@ body {
   transform: translateY(-50%);
 }
 #download-overlay-ok-button {
-  background-color: pink;  
+  background-color: #1991F4;
+  color: white;
   position: absolute;
   bottom: 5vw;
   width: 90vw;

@@ -131,7 +131,9 @@ $(window).on("uploadImage", function(e, p1, p2) {
   
   // Trash Button on click
   $("#"+TRASH_BUTTON_ID).click(function() {
-    $(window).trigger("deleteImage");  
+    if (confirm("Are you sure you want to discard your image and start again?")) {
+      $(window).trigger("deleteImage");  
+    }
   });
  
 });
