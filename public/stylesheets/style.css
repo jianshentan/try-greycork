@@ -164,11 +164,11 @@ body {
   overflow: hidden;
   z-index: 120;
   color: red;
-  border: 2px solid red;
+  border: 2px solid #1991F4;
   border-radius: 50%;
   width: 14vw;
   height: 14vw;
-  background-color: pink;
+  background-color: #1991F4;
 }
 #sticker-button { /* left aligned */
   position: absolute;
@@ -192,15 +192,14 @@ body {
   transform: translateX(-50%) translateY(-50%);
   display: none;
 }
-#camera-button #camera-icon {
+#sticker-button img,
+#save-button img,
+#trash-button img,
+#camera-button img {
   margin-left: 1.5vw;
   margin-top: 1.5vw;
   width: 10vw;
   height: 10vw;
-  display: none;
-}
-#camera-button #camera-icon.active {
-  display: block;
 }
 #camera-button.active,
 #save-button.active,
@@ -227,7 +226,8 @@ body {
   display: none;
   width: 100%;
   height: 20vh;
-  background-color: #ddd;
+  background-color: #1991F4;
+  color: white;
 }
 #promocode-container.active {
   display: block;  

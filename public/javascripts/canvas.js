@@ -145,7 +145,9 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
     $("#"+STICKER_MENU_ID).addClass("active");
     
     $("#"+STICKER_MENU_BACK_ID).click(function() {
-      $(window).trigger("hideStickerMenu")
+      $("#"+STICKER_MENU_ID).slideUp(function() {
+        $("#"+STICKER_MENU_ID).removeClass("active");
+      });
     });
     
     $("."+STICKER_ICON_CLASS).each(function() {
@@ -169,7 +171,6 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
  * EVENT: 'saveImage'
  **/
 $(window).on("saveImage", function(e) {
-  console.log("save image called!")
   var destinationCanvas = document.getElementById(CANVAS_ID);
   var destinationCtx = destinationCanvas.getContext('2d');
   destinationCtx.globalCompositeOperation = 'source-atop';
