@@ -14,6 +14,11 @@ var STICKER_MENU_ID = 'sticker-menu';
 var STICKER_MENU_BACK_ID = 'sticker-menu-bar-back';
 var STICKER_MENU_STICKERS_ID = 'sticker-menu-stickers';
 var STICKER_ICON_CLASS = 'sticker-icon';
+var DOWNLOAD_OVERLAY_ID = 'download-overlay';
+var DOWNLOAD_BUTTON_ID = 'download-overlay-ok-button';
+var DOWNLOAD_BACK_BUTTON_ID = 'download-overlay-menu-bar-back';
+var SHARE_CHECKBOX_ID = 'share-download';
+var PROMOCODE_CONTAINER_ID = 'promocode-container';
 
 var SIZE_MULTIPLIER = 2; // how much to scale the downloaded/saved image 
 
@@ -121,7 +126,7 @@ $(window).on("uploadImage", function(e, p1, p2) {
   
   // Save Button on click
   $("#"+SAVE_BUTTON_ID).click(function() {
-    $(window).trigger("saveImage")
+    $(window).trigger("openDownloadOverlay")
   });
   
   // Trash Button on click
@@ -149,7 +154,11 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
         // add new sticker to canvas
         var path = $(this).attr("src");
         stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
-        $(window).trigger("hideStickerMenu")
+        
+        // hide sticker menu
+        $("#"+STICKER_MENU_ID).slideUp(function() {
+          $("#"+STICKER_MENU_ID).removeClass("active");
+        });
       });
     });
     
@@ -157,18 +166,10 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
 });
 
 /**
- * EVENT: 'hideStickerMenu'
- **/
-$(window).on("hideStickerMenu", function(e, p1, p2) {
-  $("#"+STICKER_MENU_ID).slideUp(function() {
-    $("#"+STICKER_MENU_ID).removeClass("active");
-  });
-});
-
-/**
  * EVENT: 'saveImage'
  **/
 $(window).on("saveImage", function(e) {
+  console.log("save image called!")
   var destinationCanvas = document.getElementById(CANVAS_ID);
   var destinationCtx = destinationCanvas.getContext('2d');
   destinationCtx.globalCompositeOperation = 'source-atop';
@@ -222,8 +223,11 @@ $(window).on("saveImage", function(e) {
   $(img).css("transform", "translateX(-50%) translateY(-50%)");
   
   $("#"+EDITOR_CONTAINER_ID).append(img);
-  
   $("#"+SAVE_BUTTON_ID).off();
+  
+  // trigger the download overlay
+  $(window).trigger("openDownloadOverlay", [ /* param1, param2 */]);
+ 
 });
 
 /**
@@ -233,7 +237,7 @@ $(window).on("deleteImage", function(e, p1, p2) {
   
   // reset canvas
   var canvas = document.getElementById(CANVAS_ID);
-  $(canvas).css("width", "100vw")
+  $(canvas).css("width", "100vw");
   $(canvas).remove();
   $("#"+EDITOR_CONTAINER_ID).append($("<canvas id='canvas'></canvas>"));
   
@@ -250,4 +254,60 @@ $(window).on("deleteImage", function(e, p1, p2) {
   $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
  
 });
+
+/**
+ * EVENT: 'openDownloadOverlay'
+ **/ 
+$(window).on('openDownloadOverlay', function(e, p1, p2) {
+  $("#"+DOWNLOAD_OVERLAY_ID).slideDown(function() {
+    $("#"+DOWNLOAD_OVERLAY_ID).addClass('active');
+  });
+  
+  var isChecked = $("#"+SHARE_CHECKBOX_ID).is(":checked");
+  
+  // download the image!
+  $("#"+DOWNLOAD_BUTTON_ID).click(function() {
+    if (isChecked) {
+      // send image off to server...
+      // TODO
+    }      
+    $(window).trigger("saveImage");
+    $(window).trigger("closeDownloadOverlay");
+  });
+  
+  // clicked on back button
+  $("#"+DOWNLOAD_BACK_BUTTON_ID).click(function() {
+    
+    $("#"+DOWNLOAD_BUTTON_ID).unbind('click');
+    
+    $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
+      $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
+    })  
+    
+  });
+  
+});
+
+/**
+ * EVENT: 'closeDownloadOverlay'
+ **/ 
+$(window).on('closeDownloadOverlay', function(e, p1, p2) {
+  // hide all buttons in editor
+  $("#"+SAVE_BUTTON_ID).removeClass("active"); // show save button
+  $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
+  $("#"+CAMERA_BUTTON_ID).removeClass("active"); // hide camera icon
+  $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
+ 
+  $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
+    $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
+    $("#"+PROMOCODE_CONTAINER_ID).addClass('active');
+  });
+});
+
+
+
+
+
+
+
  

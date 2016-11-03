@@ -61,10 +61,7 @@
   
   <body>
 			<div id="main">
-				<!-- Top -->
-				<div id="editor-top">
-				</div>
-				
+			
 				<!-- canvas -->
 				<div id="editor-middle">
 					<canvas id="canvas"></canvas>	
@@ -72,7 +69,7 @@
 				</div>
 				
         <!-- bottom -->
-        <div id="editor-bottom"> <!-- height 20hv -->
+        <div id="editor-bottom"> <!-- height 20vh -->
 
 					<!-- add sticker button -->
           <div id="sticker-button" class="editor-bottom-button"></div>
@@ -90,6 +87,15 @@
 					<!-- save image button -->
           <div id="save-button" class="editor-bottom-button"></div>
 
+					<!-- Show on download image page-->
+					<div id="promocode-container">
+						<div id="promocode">123-789</div>
+						<div class="">
+							Use this promo-code at
+							<br>
+							<a href="">the Greycork store &rarr;</a>
+						</div>
+					</div>
 	  		</div>
 	  		
 	  		<!-- sticker -->
@@ -120,9 +126,39 @@
 	        </div>
 	  		</div>
 	  		
+	  		<!-- download image -->
+	  		<div id="download-overlay">
+	  			<div id="download-overlay-menu-bar">
+	  				<div id="download-overlay-menu-bar-back">
+	  					<img src="/images/camera.png">
+	  				</div>
+	  				<div id="download-overlay-menu-bar-label">
+	  					Go back to edit image
+	  				</div>
+	  			</div>
+	  			<div id="download-overlay-content">
+	  				<div class="" style="font-size: 1.6em;">
+	  					Tap and hold the image to download to your device!
+	  				</div>
+	  				<br>
+	  				<img src="/images/camera.png" style="width:20vw;">
+	  				<br>
+	  				<br>
+	  				<div class="row">
+	  					<div class="col-xs-2">
+	  						<input type="checkbox" id="share-download" value="">
+	  					</div>
+		  				<div class="col-xs-10" style="font-size:0.9em;text-align:left;text-transform:uppercase;">
+		  					Proud of your work? Share is with the Greycork team for a chance to be featured on the Greycork Catalog.
+		  				</div>
+	  				</div>
+	  			</div>
+	  			<div id="download-overlay-ok-button">Lets do it!</div>
+	  		</div>
+	  		
 	      <img id="frame" width="0" height="0" style="display:none;">
 	  	</div>
-	  
+	  	
 	  <!--
 		<div id="brim-main">
     </div>
@@ -133,7 +169,42 @@
       <p>Behind me is the <b>treadmill</b> element. It has been generated dynamically. It is used to give user plenty of space to scroll down.</p>
       <p>Scroll down to hide me.</p>
 		</div>
-
+		-->
+		
+		<!-- deal with Landscape -->
+		<div id="landscape-overlay">
+			<div id="landscape-content">
+				<img src="/images/camera.png">
+				<br>
+				Please rotate your phone<br>to portrait mode.
+			</div>
+		</div>
+		<style>
+			#landscape-overlay {
+				display: none;	
+				color: white;
+			}			
+			#landscape-content {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%);
+				text-align: center;
+			}
+			@media screen and (orientation: landscape) {
+				#landscape-overlay {
+					position: fixed;
+					width: 100vw;
+					height: 100vh;
+					background-color: #ccc;
+					top: 0px;
+					left: 0px;
+					z-index: 900;
+					display: block;
+				}
+			}
+		</style>
+		
   </body>
 
 </html>

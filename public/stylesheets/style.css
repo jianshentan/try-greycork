@@ -16,7 +16,6 @@ body {
   position: relative;
   height: 0vh;
   width: 100vw;
-  background-color: white;
   /*
   z-index: 200;
   border-bottom: 2px solid red; 
@@ -26,7 +25,6 @@ body {
   position: relative;
   height: 80vh;
   width: 100vw;
-  background-color: white;
 }
 #editor-bottom {
   /* border-top: 2px solid red; */
@@ -38,8 +36,10 @@ body {
 
 /**
  * ------------  Sticker Menu -------------
+ * ------------  Download Image Menu -------------
  **/
-#sticker-menu {
+#sticker-menu,
+#download-overlay {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -49,24 +49,31 @@ body {
   z-index: 300;
   display: none;
 }
-#sticker-menu.active {
+#sticker-menu.active,
+#download-overlay.active {
   display: block;
 }
-#sticker-menu-bar {
+#sticker-menu-bar,
+#download-overlay-menu-bar {
   height: 10vh;
   color: white;
   line-height: 10vh;
   text-align: center;
+}
+#sticker-menu-bar {
   border-bottom: 1px solid white;
 }
-#sticker-menu-bar-back {
+#sticker-menu-bar-back,
+#download-overlay-menu-bar-back {
   position: absolute;
   left: 5vw;
   line-height: 10vh;
 }
-#sticker-menu-bar-back img {
+#sticker-menu-bar-back img,
+#download-overlay-menu-bar-back img {
   height: 10vw;
 }
+
 #sticker-menu-stickers {
   padding-left:5vw;
   padding-right:5vw; 
@@ -89,10 +96,31 @@ body {
   margin: 0 auto;
 }
 
+#download-overlay-content {
+  color: white;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#download-overlay-ok-button {
+  background-color: pink;  
+  position: absolute;
+  bottom: 5vw;
+  width: 90vw;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1.8em;
+  left: 5vw;
+}
+
 /**
  * ------------  Canvas/Editor/Img -------------
  **/
-
 #canvas {
   /*width: 100vw;*/
   overflow: hidden;
@@ -192,4 +220,20 @@ body {
   right: 0;
   text-align: right;
   top: 0;
+}
+#promocode-container {
+  position: absolute;
+  text-align: center;
+  display: none;
+  width: 100%;
+  height: 20vh;
+  background-color: #ddd;
+}
+#promocode-container.active {
+  display: block;  
+}
+#promocode {
+  font-size: 3.0em;
+  font-weight: 800;
+  margin-top: 8px;
 }
