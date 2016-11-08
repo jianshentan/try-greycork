@@ -128,7 +128,6 @@ Sticker = function(imageSrc, containerElementSelector) {
   	document.addEventListener('mouseup', onDocumentMouseUp);
   	document.addEventListener('mousemove', onDocumentMouseMove);
   	if(event.shiftKey === true) {
-  	  console.log("shift1");
   		//assume second touchpoint is in middle of screen
   		handleGestureStart(posX, posY, event.clientX, event.clientY);
   	} else {
@@ -139,7 +138,6 @@ Sticker = function(imageSrc, containerElementSelector) {
   
   function onDocumentMouseMove(event) {
   	if(event.shiftKey) {
-  	  console.log("shift2");
   		handleGesture(posX, posY, event.clientX, event.clientY); 
   	} else {
   		handleDragging(event.clientX, event.clientY);

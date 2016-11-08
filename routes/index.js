@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   if (req.mobile == true) {
     res.render('m-index', { mobile: "true" });
   } else {
-    res.render('m-index', { mobile: "false" });
+    res.render('index', { mobile: "false" });
   }
 });
 

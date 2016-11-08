@@ -1,11 +1,153 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Try Greycork</title>
+    <title>Try Greycork on Mobile</title>
+    		
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="Index,Follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+    
+    <!-- custom css -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!-- bootstrap css-->
+    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'>
+    
+ 	  <!-- load jquery minified js -->
+		<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<!-- load bootstrap minified js -->
+		<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<!-- load load-image js minified -->
+		<script src="/javascripts/load-image.all.min.js"></script>
+		<!-- load itemslide js minified -->
+		<script src="/javascripts/itemslide.min.js"></script>
+		
+		<script>var mobile = false;</script>
+		
+		<!-- load custom slider script -->
+		<script src="/javascripts/slider.js"></script>
+		<!-- load custom gestures script -->
+		<script src="/javascripts/sticker.js"></script>
+		<!-- load custom canvas script -->
+		<script src="/javascripts/canvas.js"></script>
+		
   </head>
+  
   <body>
-    <h1>Try Greycork</h1>
-    <p>Welcome to Greycork</p>
+    
+    <!-- sticker -->
+		<div id="sticker-menu">
+			<div id="sticker-menu-bar">
+				<div id="sticker-menu-bar-back">
+					<img src="/images/back-icon.png">
+				</div>
+				<div id="sticker-menu-bar-label">Tap to select a sticker</div>
+			</div>
+			<div id="sticker-menu-stickers">
+				<!-- 
+				
+				This part is generated in canvas.js
+				The structure is as follows:
+				
+			  <div class="row sticker-menu-row">
+      		<div class="col-xs-6 sticker-menu-col">
+      			<img class="sticker-icon" src="/images/stickers/square.png"/>
+      		</div>
+      		<div class="col-xs-6 sticker-menu-col">
+      			<img class="sticker-icon" src="/images/stickers/test.png"/>
+      		</div>
+      	</div>
+      	....
+      	
+      	-->
+      </div>
+		</div>
+		<div id="main">
+  		
+			<!-- instructions/background-image 
+			<div id="instructions-container" class="active">
+				<div id="instructions">
+					<div>Take or upload a photo of a space to start!</div>
+				</div>	
+				<div id="instructions-arrow">&darr;</div>	
+			</div>-->
+	
+			<!-- canvas -->
+			<div id="editor-middle">
+				<canvas id="canvas"></canvas>	
+				<img id="saved-img"/>
+			</div>
+			
+      <!-- bottom -->
+      <div id="editor-bottom"> <!-- height 20vh -->
+
+				<!-- add sticker button -->
+        <div id="sticker-button" class="editor-bottom-button">
+        	<img src="/images/sticker-menu-icon.png">
+        </div>
+        
+				<!-- add trash canvas button -->
+        <div id="trash-button" class="editor-bottom-button">
+        	<img src="/images/trash-icon.png">
+        </div>
+
+  		  <!-- Take picture button -->
+	  		<label id="camera-button" class="editor-bottom-button active">
+	  		  <img src="/images/camera-icon.png"/>
+	        <input type="file" accept="image/*" capture="camera" id="camera">
+	  		</label>
+
+				<!-- save image button -->
+        <div id="save-button" class="editor-bottom-button">
+        	<img src="/images/save-icon.png">
+        </div>
+
+				<!-- Show on download image page-->
+				<div id="promocode-container">
+					<!--<div id="promocode">123-789</div>-->
+					<div class="promocode-content">
+						Looks like you're ready to check out
+						<br>
+						<a href="" style="color:white;text-decoration:underline">the Greycork store &rarr;</a>
+					</div>
+				</div>
+  		</div>
+
+  		<!-- download image -->
+  		<div id="download-overlay">
+  			<div id="download-overlay-menu-bar">
+  				<div id="download-overlay-menu-bar-back">
+  					<img src="/images/back-icon.png">
+  				</div>
+  				<div id="download-overlay-menu-bar-label">
+  					Go back to edit image
+  				</div>
+  			</div>
+  			<div id="download-overlay-content">
+  				<div class="" style="font-size: 1.6em;">
+  					Tap and hold the image to download to your device!
+  				</div>
+  				<br>
+  				<img src="/images/tap-icon.png" style="width:20vw;">
+  				<br>
+  				<br>
+  				<div class="row">
+  					<div class="col-xs-2">
+  						<input type="checkbox" id="share-download" value="">
+  					</div>
+	  				<div class="col-xs-10" style="font-size:0.9em;text-align:left;text-transform:uppercase;">
+	  					Proud of your work? Share is with the Greycork team for a chance to be featured on the Greycork Catalog.
+	  				</div>
+  				</div>
+  			</div>
+  			<div id="download-overlay-ok-button">Save Image!</div>
+  		</div>
+  		
+      <img id="frame" width="0" height="0" style="display:none;">
+  	</div>
+		
   </body>
+
 </html>

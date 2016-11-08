@@ -1,5 +1,6 @@
 /* globals $ */
 /* globals loadImage */
+/* globals mobile */
    
 var CAMERA_ID = 'camera';
 var CAMERA_BUTTON_ID = 'camera-button';
@@ -22,11 +23,10 @@ var PROMOCODE_CONTAINER_ID = 'promocode-container';
 var INSTRUCTIONS_CONTAINER_ID = 'instructions-container';
 
 var SIZE_MULTIPLIER = 2; // how much to scale the downloaded/saved image 
-
 var stickerStack = []; // stack of active stickers
 
 $(document).ready(function() {
-  
+
   /**
    * Take picture / Upload picture and put picture in the background canvas
    **/
@@ -108,6 +108,14 @@ $(document).ready(function() {
     }
   }
   
+  /**
+   * Handle events if mobile 
+   **/
+  if (!mobile) {
+    console.log("start");
+    $(window).trigger("showStickerMenu");
+  } 
+   
 });
 
 /**
@@ -147,31 +155,44 @@ $(window).on("uploadImage", function(e, p1, p2) {
  * EVENT: 'showStickerMenu'
  **/
 $(window).on("showStickerMenu", function(e, p1, p2) {
-  $("#"+STICKER_MENU_ID).slideDown(function() {
-    
-    $("#"+STICKER_MENU_ID).addClass("active");
-    
-    $("#"+STICKER_MENU_BACK_ID).click(function() {
-      $("#"+STICKER_MENU_ID).slideUp(function() {
-        $("#"+STICKER_MENU_ID).removeClass("active");
-      });
-    });
-    
-    $("."+STICKER_ICON_CLASS).each(function() {
-      $(this).unbind('click');
-      $(this).one('click', function(){
-        // add new sticker to canvas
-        var path = $(this).attr("src");
-        stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
-        
-        // hide sticker menu
+  if (mobile) {
+    $("#"+STICKER_MENU_ID).slideDown(function() {
+      
+      $("#"+STICKER_MENU_ID).addClass("active");
+      
+      $("#"+STICKER_MENU_BACK_ID).click(function() {
         $("#"+STICKER_MENU_ID).slideUp(function() {
           $("#"+STICKER_MENU_ID).removeClass("active");
         });
       });
+      
+      $("."+STICKER_ICON_CLASS).each(function() {
+        $(this).unbind('click');
+        $(this).one('click', function(){
+          // add new sticker to canvas
+          var path = $(this).attr("src");
+          stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
+          
+          // hide sticker menu
+          $("#"+STICKER_MENU_ID).slideUp(function() {
+            $("#"+STICKER_MENU_ID).removeClass("active");
+          });
+        });
+      });
+      
     });
-    
-  });
+  } else {
+    console.log("here");
+    $("."+STICKER_ICON_CLASS).each(function() {
+      //$(this).unbind('click');
+      $(this).one('click', function(){
+        // add new sticker to canvas
+        var path = $(this).attr("src");
+        console.log(path);
+        stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
+      });
+    });
+  }
 });
 
 /**
