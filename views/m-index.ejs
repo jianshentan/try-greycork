@@ -12,8 +12,7 @@
     
     <!-- custom css -->
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <!-- bootstrap css
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+    <!-- bootstrap css-->
     <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.min.css'>
     
  	  <!-- load jquery minified js -->
@@ -22,7 +21,11 @@
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<!-- load load-image js minified -->
 		<script src="/javascripts/load-image.all.min.js"></script>
+		<!-- load itemslide js minified -->
+		<script src="/javascripts/itemslide.min.js"></script>
 		
+		<!-- load custom slider script -->
+		<script src="/javascripts/slider.js"></script>
 		<!-- load custom gestures script -->
 		<script src="/javascripts/sticker.js"></script>
 		<!-- load custom canvas script -->
@@ -57,11 +60,73 @@
 		  }
 		</script>    
 		-->
+		
   </head>
   
   <body>
 			<div id="main">
-			
+				
+				<!-- Intro pages -->
+				<div id="slider" class="blue-gradient-bg">
+						
+					<div id="slider-logo">
+						<br>
+			    	<img src="/images/greycork-logo.png">
+			    </div>
+				    
+					<div id="slider-navigation" class="">
+						<div class="slider-nav active" data-index="0"></div>
+						<div class="slider-nav" data-index="1"></div>
+						<div class="slider-nav" data-index="2"></div>
+						<div class="slider-nav" data-index="3"></div>
+					</div>
+						
+					<div id="slider-footer">
+					  <div id="skip-tutorial">skip the tutorial</div>	
+					</div>
+					
+					<ul> <!-- do not change the <ul> element - slider uses this as identifier -->
+					
+						<!-- slide 1 -->
+					  <li class="slide">
+					    <div class="slide-content">
+					    	<img src="/images/greycork-logo.png">
+					    	<div class="" style="font-size: 1.5em;">
+					    		Play with stickers and imagine your home with Greycork.
+					    	</div>
+					    	<br>
+					    	<div class="" style="font-size: 1.0em;text-transform:uppercase">
+					    		(Swipe right)
+					    	</div>
+					    </div>
+					  </li>
+					  
+						<!-- slide 2 -->
+					  <li class="slide">
+					  </li>
+					   
+						<!-- slide 3 -->
+					  <li class="slide">
+					  </li>
+					  
+						<!-- slide 4 -->
+					  <li class="slide">
+					    <div class="slide-content">
+					  		<div id="play-now">Play Now</div>
+					  	</div>
+					  </li>
+					  				  
+					</ul>
+				</div>
+				
+				<!-- instructions/background-image TODO -->
+				<div id="instructions-container" class="active">
+					<div id="instructions">
+						<div>Take or upload a photo of a space to start!</div>
+					</div>	
+					<div id="instructions-arrow">&darr;</div>	
+				</div>
+		
 				<!-- canvas -->
 				<div id="editor-middle">
 					<canvas id="canvas"></canvas>	
@@ -94,11 +159,11 @@
 
 					<!-- Show on download image page-->
 					<div id="promocode-container">
-						<div id="promocode">123-789</div>
-						<div class="">
-							Use this promo-code at
+						<!--<div id="promocode">123-789</div>-->
+						<div class="promocode-content">
+							Looks like you're ready to check out
 							<br>
-							<a href="" style="color:white;">the Greycork store &rarr;</a>
+							<a href="" style="color:white;text-decoration:underline">the Greycork store &rarr;</a>
 						</div>
 					</div>
 	  		</div>
@@ -146,7 +211,7 @@
 	  					Tap and hold the image to download to your device!
 	  				</div>
 	  				<br>
-	  				<img src="/images/camera.png" style="width:20vw;">
+	  				<img src="/images/tap-icon.png" style="width:20vw;">
 	  				<br>
 	  				<br>
 	  				<div class="row">
@@ -158,7 +223,7 @@
 		  				</div>
 	  				</div>
 	  			</div>
-	  			<div id="download-overlay-ok-button">Lets do it!</div>
+	  			<div id="download-overlay-ok-button">Save Image!</div>
 	  		</div>
 	  		
 	      <img id="frame" width="0" height="0" style="display:none;">

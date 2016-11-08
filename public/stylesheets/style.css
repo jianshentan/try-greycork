@@ -12,16 +12,8 @@ body {
 #main {
   width: 100%;
   background-image: url("../images/bg.png");
+  background-position: center;
   background-repeat: repeat;
-}
-#editor-top {
-  position: relative;
-  height: 0vh;
-  width: 100vw;
-  /*
-  z-index: 200;
-  border-bottom: 2px solid red; 
-  */
 }
 #editor-middle {
   position: relative;
@@ -34,6 +26,36 @@ body {
   height: 20vh;
   width: 100vw;
   z-index: 200;
+}
+#instructions-container {
+  z-index: 50;  
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: blue;
+  color: white;
+  display: none;
+}
+#instructions-container.active {
+  display: block;
+}
+#instructions {
+  position: absolute;
+  width: 70vw;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  font-size: 1.5em;
+}
+#instructions-arrow {
+  position: absolute;
+  bottom: 20vh;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 5.0em;
 }
 
 /**
@@ -147,22 +169,8 @@ body {
 }
 
 /**
- * ------------  Brim  -------------
- **/
-
-#brim-mask, #brim-main {
-  color: #fff;
-  display: none; 
-}
-#brim-mask {
-  background: #663399; 
-  pointer-events: none;
-}
-  
-/**
  * --------- Editor - Bottom ----------
  **/
-
 .editor-bottom-button {
   overflow: hidden;
   z-index: 120;
@@ -239,4 +247,122 @@ body {
   font-size: 3.0em;
   font-weight: 800;
   margin-top: 8px;
+}
+#promocode-content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); 
+  width: 100%;
+}
+
+/**
+ * --------- Intro-Slides ----------
+ **/
+#slider { /* Carousel Frame */
+  overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 400;
+}
+#slider-logo {
+  position: fixed;
+  z-index: 401;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#slider-logo img {
+  width: 20vw;
+  height: 20vw;
+}
+#slider-navigation {
+  position: fixed;  
+  z-index: 401;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10vh;
+  text-align: center;
+  color: white;
+}
+.slider-nav {
+  border-radius: 16px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  display: inline-block;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.slider-nav.active {
+  background-color: white;
+}
+#slider-footer {
+  position: fixed;
+  bottom: 5vw;
+  left: 50%;
+  z-index: 401;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  position: absolute;
+  -webkit-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+li.slide {
+  float: left;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+.slide-content {
+  position: absolute;
+  left: 50%;
+  top: 48%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 60vw;
+}
+.slide-content img {
+  width: 40vw;
+  height: 40vw;
+}
+#play-now {
+  border: 2px solid white;
+  padding: 10px 10px;
+  text-align: center;
+  display: inline; 
+}
+
+/**
+ * background blue gradient
+ **/
+.blue-gradient-bg {
+  background: rgba(30,176,247,1);
+  background: -moz-linear-gradient(top, rgba(30,176,247,1) 0%, rgba(25,145,244,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(30,176,247,1)), color-stop(100%, rgba(25,145,244,1)));
+  background: -webkit-linear-gradient(top, rgba(30,176,247,1) 0%, rgba(25,145,244,1) 100%);
+  background: -o-linear-gradient(top, rgba(30,176,247,1) 0%, rgba(25,145,244,1) 100%);
+  background: -ms-linear-gradient(top, rgba(30,176,247,1) 0%, rgba(25,145,244,1) 100%);
+  background: linear-gradient(to bottom, rgba(30,176,247,1) 0%, rgba(25,145,244,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1eb0f7', endColorstr='#1991f4', GradientType=0 );
+}
+
+/**
+ * ------------  Brim  -------------
+ **/
+
+#brim-mask, #brim-main {
+  color: #fff;
+  display: none; 
+}
+#brim-mask {
+  background: #663399; 
+  pointer-events: none;
 }

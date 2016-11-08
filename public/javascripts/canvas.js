@@ -19,6 +19,7 @@ var DOWNLOAD_BUTTON_ID = 'download-overlay-ok-button';
 var DOWNLOAD_BACK_BUTTON_ID = 'download-overlay-menu-bar-back';
 var SHARE_CHECKBOX_ID = 'share-download';
 var PROMOCODE_CONTAINER_ID = 'promocode-container';
+var INSTRUCTIONS_CONTAINER_ID = 'instructions-container';
 
 var SIZE_MULTIPLIER = 2; // how much to scale the downloaded/saved image 
 
@@ -63,7 +64,7 @@ $(document).ready(function() {
         canvas.height = tempCanvas.height;
         var ctx = canvas.getContext('2d');
         ctx.drawImage(tempCanvas, 0, 0);
-        $(canvas).css("width", ($(canvas).width() / SIZE_MULTIPLIER) + "px")
+        $(canvas).css("width", ($(canvas).width() / SIZE_MULTIPLIER) + "px");
         
         // image offsets to keep canvas centered
         $(canvas).css("left", "50%");
@@ -71,7 +72,7 @@ $(document).ready(function() {
         $(canvas).css("transform", "translateX(-50%) translateY(-50%)");
         
         // canvas is ready!
-        $(window).trigger("uploadImage", [ /* param1, param2 */])
+        $(window).trigger("uploadImage", [ /* param1, param2 */]);
       }, options);
     });
   });
@@ -93,7 +94,7 @@ $(document).ready(function() {
     
     var stickerPath = stickerPaths[i];      
     var imgElement = $("<img class='sticker-icon' src='"+stickerPath+"'/>");
-    var colElement = $("<div class='col-xs-6 sticker-menu-col'></div>")
+    var colElement = $("<div class='col-xs-6 sticker-menu-col'></div>");
     colElement.append(imgElement);
     columns.push(colElement);
     
@@ -118,18 +119,22 @@ $(window).on("uploadImage", function(e, p1, p2) {
   $("#"+TRASH_BUTTON_ID).addClass("active"); // show trash icon
   $("#"+CAMERA_BUTTON_ID).removeClass("active"); // hide camera icon
   $("#"+STICKER_BUTTON_ID).addClass("active"); // show sticker button
+  $("#"+INSTRUCTIONS_CONTAINER_ID).removeClass("active"); // show sticker button
   
   // Sticker Button on click
+  $("#"+TRASH_BUTTON_ID).off('click');
   $("#"+STICKER_BUTTON_ID).click(function() {
-    $(window).trigger("showStickerMenu", [ /* param1, param2 */])
+    $(window).trigger("showStickerMenu", [ /* param1, param2 */]);
   });
   
   // Save Button on click
+  $("#"+TRASH_BUTTON_ID).off('click');
   $("#"+SAVE_BUTTON_ID).click(function() {
-    $(window).trigger("openDownloadOverlay")
+    $(window).trigger("openDownloadOverlay");
   });
   
   // Trash Button on click
+  $("#"+TRASH_BUTTON_ID).off('click');
   $("#"+TRASH_BUTTON_ID).click(function() {
     if (confirm("Are you sure you want to discard your image and start again?")) {
       $(window).trigger("deleteImage");  
@@ -255,6 +260,7 @@ $(window).on("deleteImage", function(e, p1, p2) {
   $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
   $("#"+CAMERA_BUTTON_ID).addClass("active"); // hide camera icon
   $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
+  $("#"+INSTRUCTIONS_CONTAINER_ID).addClass("active"); // show sticker button
  
 });
 
@@ -269,6 +275,7 @@ $(window).on('openDownloadOverlay', function(e, p1, p2) {
   var isChecked = $("#"+SHARE_CHECKBOX_ID).is(":checked");
   
   // download the image!
+  $("#"+DOWNLOAD_BUTTON_ID).off('click');
   $("#"+DOWNLOAD_BUTTON_ID).click(function() {
     if (isChecked) {
       // send image off to server...
@@ -279,13 +286,14 @@ $(window).on('openDownloadOverlay', function(e, p1, p2) {
   });
   
   // clicked on back button
+  $("#"+DOWNLOAD_BACK_BUTTON_ID).off('click');
   $("#"+DOWNLOAD_BACK_BUTTON_ID).click(function() {
     
     $("#"+DOWNLOAD_BUTTON_ID).unbind('click');
     
     $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
       $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
-    })  
+    });
     
   });
   
