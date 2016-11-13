@@ -35,39 +35,17 @@
 		<!-- load custom canvas script -->
 		<script src="/javascripts/canvas.js"></script>
 		
-		<!-- load platform/scream/brim to manage minimal ui
+		<!-- load platform/scream/brim to manage minimal ui -->
+		<!-- brim has to be @version 1.0.10 -->
 		<script src="/bower_components/platform.js/platform.js"></script>
 		<script src="/bower_components/scream/dist/scream.js"></script>
 		<script src="/bower_components/brim/dist/brim.js"></script>
-		<script>
-		  // user is using Safari
-			var scream, brim;
-		  if (platform.os.family == 'iOS' && parseInt(platform.os.version, 10) >= 8) {
-			  if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
-			    window.addEventListener('DOMContentLoaded', function () {
-				    scream = gajus.Scream({
-				      width: {
-				        portrait: 320,
-				        landscape: 568
-				      }
-				    });
-				    
-				    brim = gajus.Brim({
-				      viewport: scream
-				    });
-				    
-				    brim.on('viewchange', function(e) {
-				    	document.body.className = e.viewName;
-				    });
-			    });
-			  }
-		  }
-		</script>    
-		-->
-		
+
   </head>
   
   <body>
+		<div id="brim-main">
+    
 			<div id="main">
 				
 				<!-- Intro pages -->
@@ -270,17 +248,39 @@
 	      <img id="frame" width="0" height="0" style="display:none;">
 	  	</div>
 	  	
-	  <!--
-		<div id="brim-main">
-    </div>
-    
+	  </div>
+	  
  		<div id="brim-mask">
  		  <p>Hello, I am the <b>mask</b> element.</p>
       <p>My purpose is to hide the <b>main</b> element when browser is not in the minimal view and give user instructions how to enter the minimal view.</p>
       <p>Behind me is the <b>treadmill</b> element. It has been generated dynamically. It is used to give user plenty of space to scroll down.</p>
       <p>Scroll down to hide me.</p>
 		</div>
-		-->
+		<script>
+		  // user is using Safari
+			var scream, brim;
+		  if (platform.os.family == 'iOS' && parseInt(platform.os.version, 10) >= 8) {
+			  if (!!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/)) {
+			    window.addEventListener('DOMContentLoaded', function () {
+				    scream = gajus.Scream({
+				      width: {
+				        portrait: 320,
+				        landscape: 568
+				      }
+				    });
+				    
+				    brim = gajus.Brim({
+				      viewport: scream
+				    });
+				    
+				    brim.on('viewchange', function(e) {
+				    	document.body.className = e.viewName;
+				    });
+			    });
+			  }
+		  }
+		</script>    
+		
 		
 		<!-- deal with Landscape mode -->
 		<div id="landscape-overlay">

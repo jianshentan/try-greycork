@@ -10,7 +10,6 @@ body {
   padding: 0px;
 }
 #main {
-  background-color: yellow;
   background-image: url("../images/bg.png");
   background-position: center;
   background-repeat: repeat;
@@ -68,7 +67,7 @@ body {
   float: left;
 }
 #sticker-menu-bar {
-  height: 36px;
+  height: 5vh;
   width: 100%;
 }
 #sticker-menu-bar-back {
@@ -78,18 +77,18 @@ body {
   line-height: 36px;
 }
 #sticker-menu-bar-back img {
-  width: 36px;
-  height: 36px;
+  height: 5vh;
 }
 #sticker-menu-bar-label {
   color: white;
   text-align: center;
   position: absolute;
   width: 100%;
-  line-height: 36px;
+  line-height: 5vh;
 }
 #sticker-menu-stickers {
   overflow-y: scroll;
+  height: 95vh;
 }
 .sticker-menu-row {
   height: 100px;
@@ -102,7 +101,7 @@ body {
   text-align: center;  
 }
 .sticker-icon {
-  width: 50px;
+  height: 50px;
   display: block;
   margin: 0 auto;
 }

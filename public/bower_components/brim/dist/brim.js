@@ -1,5 +1,5 @@
 /**
- * @version 1.0.11
+ * @version 1.0.10
  * @link https://github.com/gajus/brim for the canonical source repository
  * @license https://github.com/gajus/brim/blob/master/LICENSE BSD 3-Clause
  */
@@ -106,9 +106,6 @@ Brim = function Brim (config) {
             eventEmitter.trigger('viewchange', e);
         });
 
-        brim._main();
-        brim._mask();
-
         // Disable window scrolling when in minimal view.
         // @see http://stackoverflow.com/a/26853900/368691
         (function () {
@@ -120,7 +117,7 @@ Brim = function Brim (config) {
 
             global.document.addEventListener('touchmove', function (e) {
                 if (viewport.isMinimalView() && firstMove) {
-                    //e.preventDefault();
+                    e.preventDefault();
                 }
 
                 firstMove = false;
@@ -173,13 +170,7 @@ Brim = function Brim (config) {
      * @return {HTMLElement}
      */
     brim._makeTreadmill = function () {
-        var treadmill = document.querySelector('#brim-treadmill');
-
-        if (treadmill) {
-            throw new Error('There is an existing treadmill element.');
-        }
-
-        treadmill = document.createElement('div');
+        var treadmill = document.createElement('div');
         treadmill.id = 'brim-treadmill';
 
         document.body.appendChild(treadmill);
@@ -203,10 +194,6 @@ Brim = function Brim (config) {
     brim._makeMask = function () {
         var mask = document.querySelector('#brim-mask');
 
-        if (!mask) {
-            throw new Error('Mask element does not exist.');
-        }
-
         mask.style.position = 'fixed';
         mask.style.zIndex = 30;
 
@@ -222,26 +209,13 @@ Brim = function Brim (config) {
     brim._makeMain = function () {
         var main = document.querySelector('#brim-main');
 
-        if (!main) {
-            throw new Error('Main element does not exist.');
-        }
-
         main.style.position = 'fixed';
         main.style.zIndex = 20;
 
         main.style.top = 0;
         main.style.left = 0;
 
-        main.style.overflowY = 'scroll';
-        main.style.webkitOverflowScrolling = 'touch';
-
         return main;
-    };
-
-    brim._makeDOM = function () {
-        player.treadmill = brim._makeTreadmill();
-        player.mask = brim._makeMask();
-        player.main = brim._makeMain();
     };
 
     /**
@@ -262,7 +236,9 @@ Brim = function Brim (config) {
 
     brim.on = eventEmitter.on;
 
-    brim._makeDOM();
+    player.treadmill = brim._makeTreadmill();
+    player.mask = brim._makeMask();
+    player.main = brim._makeMain();
 
     brim._setupDOMEventListeners();
 };

@@ -21,6 +21,7 @@ body {
   overflow-x: hidden; 
   height: 80vh;
   width: 100vw;
+  background-color: rgba(0,0,0,0.1);
 }
 #editor-bottom {
   /* border-top: 2px solid red; */
@@ -365,8 +366,11 @@ li.slide {
 #brim-mask, #brim-main {
   color: #fff;
   display: none; 
+  z-index: 800 !important;
 }
 #brim-mask {
   background: #663399; 
   pointer-events: none;
+  z-index: 801 !important;
+  padding: 20px;
 }

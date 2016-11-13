@@ -1,5 +1,6 @@
 /* global $ */
 /* global Image */
+/* global stickerStack */
 
 //Provides requestAnimationFrame from @ greggman in a cross browser way.
 if ( !window.requestAnimationFrame ) {
@@ -104,6 +105,23 @@ Sticker = function(imageSrc, containerElementSelector) {
     return currentRotation;  
   };
   
+  function setStickerToTop() {
+  	// Reorder 'active' sticker to top. 
+  	
+  	// 1) reorder stickerStack, 
+  	var currSticker = sticker;
+  	for (var i in stickerStack) {
+  	  if ($(stickerStack[i].getSticker()).is(currSticker)) {
+  	    var stickerObj = stickerStack.splice(i, 1)[0]; // remove from array
+  	    stickerStack.push(stickerObj);
+  	  }
+  	}
+  	
+  	// 2) reorder canvases
+  	sticker.remove();
+    containerElement.append(sticker); 	
+  }
+  
   function onAnimationFrame() {
     requestAnimationFrame(onAnimationFrame);
     
@@ -115,11 +133,12 @@ Sticker = function(imageSrc, containerElementSelector) {
     
     sticker.style[prefixedTransform] = 'translate('+posX+'px,'+posY+'px) rotate('+currentRotation+'deg) scale('+currentScale+') translateZ(0)';
     
-    velocityX = velocityX * 0.10;
-    velocityY = velocityY * 0.10;
+    velocityX = velocityX * 0.90;
+    velocityY = velocityY * 0.90;
     
     input.dragDX = 0;
     input.dragDY = 0;
+    
   }
   
   // events:
@@ -134,6 +153,7 @@ Sticker = function(imageSrc, containerElementSelector) {
   		handleGestureStop();
   		handleDragStart(event.clientX, event.clientY);
   	}
+  	setStickerToTop();
   }
   
   function onDocumentMouseMove(event) {
@@ -164,6 +184,7 @@ Sticker = function(imageSrc, containerElementSelector) {
   	} else if (event.touches.length === 2) {
   		handleGestureStart(event.touches[0].clientX, event.touches[0].clientY, event.touches[1].clientX, event.touches[1].clientY);
   	}
+  	setStickerToTop();
   }
   
   function onTouchMove(event) {
@@ -336,7 +357,11 @@ Sticker.prototype.getRotation = function() {
 
 Sticker.prototype.deleteSticker = function() {
   $(this.getSticker()).remove();
-}
+};
+
+Sticker.prototype.equals = function(sticker) {
+  return $(this.getSticker()).is(sticker.getSticker());
+};
 
 
 
