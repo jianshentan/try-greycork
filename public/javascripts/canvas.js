@@ -82,10 +82,18 @@ $(document).ready(function() {
    **/
     
   var stickerPaths = [
-    "/images/stickers/square.png",
-    "/images/stickers/test.png",
-    "/images/stickers/test.png",
-    "/images/stickers/square.png"
+    "/images/stickers/bookshelf_main.png",
+    "/images/stickers/chaise_sticker.png",
+    "/images/stickers/coffee_table_main.png",
+    "/images/stickers/person_book.png",
+    "/images/stickers/sectional_sticker.png",
+    "/images/stickers/side_table_gallery.png",
+    "/images/stickers/sofa_sticker.png",
+    "/images/stickers/carrying_couch.png",
+    "/images/stickers/dog_sticker.png",
+    "/images/stickers/donut_stack.png",
+    "/images/stickers/donut_stack2.png",
+    "/images/stickers/bialetti.png"
   ];
   var stickersContainer = $("#"+STICKER_MENU_STICKERS_ID);
   
@@ -112,7 +120,6 @@ $(document).ready(function() {
    * Handle events if mobile 
    **/
   if (!mobile) {
-    console.log("start");
     $(window).trigger("showStickerMenu");
   } 
    
@@ -182,13 +189,11 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
       
     });
   } else {
-    console.log("here");
     $("."+STICKER_ICON_CLASS).each(function() {
       //$(this).unbind('click');
       $(this).one('click', function(){
         // add new sticker to canvas
         var path = $(this).attr("src");
-        console.log(path);
         stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
       });
     });
@@ -219,7 +224,7 @@ $(window).on("saveImage", function(e) {
 
     // sticker offsets to take into account that canvas is centered
     var offsetTop = $(destinationCanvas).offset().top - $("#"+EDITOR_CONTAINER_ID).offset().top;
-    var offsetLeft = $(destinationCanvas).offset().left;
+    var offsetLeft = $(destinationCanvas).offset().left - $("#"+EDITOR_CONTAINER_ID).offset().left;
     destinationCtx.translate(-offsetLeft, -offsetTop);
 
     // set rotation/scale

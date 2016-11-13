@@ -41,7 +41,7 @@ Sticker = function(imageSrc, containerElementSelector) {
   var velocityX = 0;
   var velocityY = 0;
   var maxScale = 1.5;
-  var minScale = 0.5;
+  var minScale = 0.2;
   
   // create sticker canvas
   sticker = document.createElement('canvas');

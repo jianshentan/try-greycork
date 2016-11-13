@@ -1,8 +1,8 @@
 /* global $ */
+/* global localStorage */
 
 var carousel;
 $(document).ready(function () {
-  
   carousel = $("ul");
   
   // initialize carousel
@@ -25,8 +25,23 @@ $(document).ready(function () {
   });
   
   // skip tutorial
-  $("#skip-tutorial, #play-now").click(function() {
+  $("#skip-tutorial").click(function() {
     $("#slider").slideUp();  
+    localStorage.setItem("skippedTutorial", "true");
   });
+  
+  // complete tutorial
+  $("#play-now").click(function() {
+    $("#slider").slideUp();  
+    localStorage.setItem("completedTutorial", "true");
+  });
+  
+  // unless skippedTutorial or completedTutorial, show tutorial
+  if (localStorage.getItem("completedTutorial") == "true" ||
+      localStorage.getItem("skippedTutorial") == "true") {
+    $("#slider").hide();
+  } else {
+    $("#slider").show();
+  }
 
 });

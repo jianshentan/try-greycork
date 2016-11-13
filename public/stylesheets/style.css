@@ -211,6 +211,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   display: none;
+  background-color: white !important;
 }
 #trash-button,
 #camera-button { /* centered */
@@ -289,8 +290,8 @@ body {
   transform: translateX(-50%);
 }
 #slider-logo img {
-  width: 20vw;
-  height: 20vw;
+  width: 65px;
+  height: 65px;
 }
 #slider-navigation {
   position: fixed;  
@@ -300,6 +301,7 @@ body {
   bottom: 10vh;
   text-align: center;
   color: white;
+  width: 100%;
 }
 .slider-nav {
   border-radius: 16px;
