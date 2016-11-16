@@ -6,21 +6,36 @@ var CAMERA_ID = 'camera';
 var CAMERA_BUTTON_ID = 'camera-button';
 var SAVE_BUTTON_ID = 'save-button';
 var STICKER_BUTTON_ID = 'sticker-button';
+var RESET_STICKER_BUTTON_ID = 'reset-sticker-button';
+
 var EDITOR_CONTAINER_ID = 'editor-middle';
 var CANVAS_ID = 'canvas';
 var SAVED_IMAGE_ID = 'saved-img';
 var TRASH_BUTTON_ID = 'trash-button';
 var CAMERA_ICON_ID = 'camera-icon';
+
 var STICKER_MENU_ID = 'sticker-menu';
 var STICKER_MENU_BACK_ID = 'sticker-menu-bar-back';
 var STICKER_MENU_STICKERS_ID = 'sticker-menu-stickers';
 var STICKER_ICON_CLASS = 'sticker-icon';
+
 var DOWNLOAD_OVERLAY_ID = 'download-overlay';
 var DOWNLOAD_BUTTON_ID = 'download-overlay-ok-button';
 var DOWNLOAD_BACK_BUTTON_ID = 'download-overlay-menu-bar-back';
+
 var SHARE_CHECKBOX_ID = 'share-download';
+
 var PROMOCODE_CONTAINER_ID = 'promocode-container';
+
 var INSTRUCTIONS_CONTAINER_ID = 'instructions-container';
+
+var NOTIFICATION_ID = 'notification';
+var NOTIFICATION_CONTENT_ID = 'notification-content';
+var NOTIFICATION_CONFIRM_ID = 'notification-confirm';
+var NOTIFICATION_ALERT_ID = 'notification-alert';
+var NOTIFICATION_ALERT_OK_BUTTON_ID = 'notification-alert-ok';
+var NOTIFICATION_CONFIRM_OK_BUTTON_ID = 'notification-confirm-ok';
+var NOTIFICATION_CONFIRM_CANCEL_BUTTON_ID = 'notification-confirm-cancel';
 
 var SIZE_MULTIPLIER = 2; // how much to scale the downloaded/saved image 
 var stickerStack = []; // stack of active stickers
@@ -60,8 +75,18 @@ $(document).ready(function() {
          **/
          
         var canvas = document.getElementById(CANVAS_ID);
-        canvas.width = tempCanvas.width;
+        
+        // set width - reduce width on desktop if its a wide image
+        if (!mobile) {
+          canvas.width = tempCanvas.width > 1.5 * tempCanvas.height ? 
+            tempCanvas.width - 100 : tempCanvas.width;
+        } else {
+          canvas.width = tempCanvas.width;
+        }
+        
+        // set height 
         canvas.height = tempCanvas.height;
+        
         var ctx = canvas.getContext('2d');
         ctx.drawImage(tempCanvas, 0, 0);
         $(canvas).css("width", ($(canvas).width() / SIZE_MULTIPLIER) + "px");
@@ -82,6 +107,10 @@ $(document).ready(function() {
    **/
     
   var stickerPaths = [
+    "/images/stickers/bookshelf_main.png",
+    "/images/stickers/chaise_sticker.png",
+    "/images/stickers/coffee_table_main.png",
+    "/images/stickers/person_book.png",
     "/images/stickers/bookshelf_main.png",
     "/images/stickers/chaise_sticker.png",
     "/images/stickers/coffee_table_main.png",
@@ -117,7 +146,7 @@ $(document).ready(function() {
   }
   
   /**
-   * Handle events if mobile 
+   * Handle events if not mobile 
    **/
   if (!mobile) {
     $(window).trigger("showStickerMenu");
@@ -133,14 +162,30 @@ $(window).on("uploadImage", function(e, p1, p2) {
   $("#"+SAVE_BUTTON_ID).addClass("active"); // show save button
   $("#"+TRASH_BUTTON_ID).addClass("active"); // show trash icon
   $("#"+CAMERA_BUTTON_ID).removeClass("active"); // hide camera icon
-  $("#"+STICKER_BUTTON_ID).addClass("active"); // show sticker button
   $("#"+INSTRUCTIONS_CONTAINER_ID).removeClass("active"); // show sticker button
+  if (mobile) {
+    $("#"+STICKER_BUTTON_ID).addClass("active"); // show sticker button
+  } else {
+    $("#"+RESET_STICKER_BUTTON_ID).addClass("active"); // show reset button on desktop only
+  }
   
-  // Sticker Button on click
-  $("#"+TRASH_BUTTON_ID).off('click');
-  $("#"+STICKER_BUTTON_ID).click(function() {
-    $(window).trigger("showStickerMenu", [ /* param1, param2 */]);
-  });
+  if (mobile) {
+    
+    // Sticker Button on click (mobile only)
+    $("#"+TRASH_BUTTON_ID).off('click');
+    $("#"+STICKER_BUTTON_ID).click(function() {
+      $(window).trigger("showStickerMenu", [ /* param1, param2 */]);
+    });
+    
+  } else {
+    
+    // Reset Stickers button on click (desktop only)
+    $("#"+RESET_STICKER_BUTTON_ID).off('click');
+    $("#"+RESET_STICKER_BUTTON_ID).click(function() {
+      $(window).trigger("resetStickers", []);
+    });
+    
+  }
   
   // Save Button on click
   $("#"+TRASH_BUTTON_ID).off('click');
@@ -151,11 +196,46 @@ $(window).on("uploadImage", function(e, p1, p2) {
   // Trash Button on click
   $("#"+TRASH_BUTTON_ID).off('click');
   $("#"+TRASH_BUTTON_ID).click(function() {
+    /*
     if (confirm("Are you sure you want to discard your image and start again?")) {
       $(window).trigger("deleteImage");  
     }
+    */
+    var msg = "Are you sure you want to discard your image and start again?";
+    $(window).trigger("notification", [ 
+      msg, 
+      true, 
+      function(){
+        $(window).trigger("deleteImage");  
+      }
+    ]);
   });
  
+});
+
+/**
+ * EVENT: 'resetStickers'
+ **/
+$(window).on("resetStickers", function(e, p1, p2) {
+  if (stickerStack.length == 0) {
+    var msg = "The reset button won't work if there are no stickers! Start by adding stickers from the panel on the left.";
+    $(window).trigger("notification", [ msg, false, null ]);
+  } else {
+    var msg = "Are you sure you want to restart your stickers?"
+    $(window).trigger("notification", [ msg, true, function() {
+      // empty sticker stack and delete each sticker
+      for (var i in stickerStack) {
+        stickerStack[i].deleteSticker(); 
+      }
+      stickerStack = [];
+      
+      // remove stickers from canvas 
+      $(".sticker").each(function() {
+        $(this).remove();
+      });
+    }]);
+  }
+  
 });
 
 /**
@@ -191,7 +271,7 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
   } else {
     $("."+STICKER_ICON_CLASS).each(function() {
       //$(this).unbind('click');
-      $(this).one('click', function(){
+      $(this).on('click', function(){
         // add new sticker to canvas
         var path = $(this).attr("src");
         stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
@@ -286,6 +366,7 @@ $(window).on("deleteImage", function(e, p1, p2) {
   $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
   $("#"+CAMERA_BUTTON_ID).addClass("active"); // hide camera icon
   $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
+  $("#"+RESET_STICKER_BUTTON_ID).removeClass("active"); // hide reset button on desktop only
   $("#"+INSTRUCTIONS_CONTAINER_ID).addClass("active"); // show sticker button
  
 });
@@ -330,10 +411,11 @@ $(window).on('openDownloadOverlay', function(e, p1, p2) {
  **/ 
 $(window).on('closeDownloadOverlay', function(e, p1, p2) {
   // hide all buttons in editor
-  $("#"+SAVE_BUTTON_ID).removeClass("active"); // show save button
-  $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
+  $("#"+SAVE_BUTTON_ID).removeClass("active"); // hide save button
+  $("#"+TRASH_BUTTON_ID).removeClass("active"); // hide trash icon
   $("#"+CAMERA_BUTTON_ID).removeClass("active"); // hide camera icon
-  $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
+  $("#"+STICKER_BUTTON_ID).removeClass("active"); // hide sticker button
+  $("#"+RESET_STICKER_BUTTON_ID).removeClass("active"); // hide reset button on desktop only
  
   $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
     $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
@@ -341,7 +423,48 @@ $(window).on('closeDownloadOverlay', function(e, p1, p2) {
   });
 });
 
+/**
+ * EVENT: 'notification popup'
+ **/ 
+$(window).on('notification', function(e, text, isOption, cb) {
+  $("#"+NOTIFICATION_ID).addClass("active"); // entire notification container
+  $("#"+NOTIFICATION_CONTENT_ID).html(text); // content of notification
+  $("#"+NOTIFICATION_CONFIRM_ID).removeClass("active"); // the ok/cancel option
+  $("#"+NOTIFICATION_ALERT_ID).removeClass("active"); // the ok option
+  
+  /*
+  var NOTIFICATION_ALERT_OK_BUTTON_ID = 'notification-alert-ok';
+  var NOTIFICATION_CONFIRM_OK_BUTTON_ID = 'notification-confirm-ok';
+  var NOTIFICATION_CONFIRM_CANCEL_BUTTON_ID = 'notification-confirm-cancel';
+  */
 
+  if (isOption) {
+    $("#"+NOTIFICATION_CONFIRM_ID).addClass("active");
+    
+    // OK
+    $("#"+NOTIFICATION_CONFIRM_OK_BUTTON_ID).off();
+    $("#"+NOTIFICATION_CONFIRM_OK_BUTTON_ID).click(function() {
+      $("#"+NOTIFICATION_ID).removeClass("active");        
+      if (cb) { cb() };
+    });
+    
+    // cancel
+    $("#"+NOTIFICATION_CONFIRM_CANCEL_BUTTON_ID).off();
+    $("#"+NOTIFICATION_CONFIRM_CANCEL_BUTTON_ID).click(function() {
+      $("#"+NOTIFICATION_ID).removeClass("active");        
+    });
+    
+  } else {
+    $("#"+NOTIFICATION_ALERT_ID).addClass("active");
+    
+    // OK
+    $("#"+NOTIFICATION_ALERT_OK_BUTTON_ID).off();
+    $("#"+NOTIFICATION_ALERT_OK_BUTTON_ID).click(function() {
+      $("#"+NOTIFICATION_ID).removeClass("active");        
+      if (cb) { cb() };
+    });
+  }
+});
 
 
 

@@ -28,8 +28,8 @@
 		
 		<script>var mobile = true;</script>
 		
-		<!-- load custom slider script -->
-		<script src="/javascripts/slider.js"></script>
+		<!-- load custom scripts -->
+		<script src="/javascripts/index.js"></script>
 		<!-- load custom gestures script -->
 		<script src="/javascripts/sticker.js"></script>
 		<!-- load custom canvas script -->
@@ -44,7 +44,9 @@
   </head>
   
   <body>
+  	<!--
 		<div id="brim-main">
+		-->
     
 			<div id="main">
 				
@@ -136,6 +138,30 @@
 					</ul>
 				</div>
 				
+				<!-- Navigation -->
+				<div id="nav-button" class="generic-button">
+					<img src="/images/menu-icon.png" class="generic-button-image">
+				</div>
+				<div id="nav-container" class="">
+					<div id="nav-container-close">
+						<div id="nav-button-close" class="generic-button">
+							<img src="/images/close-icon.png" class="generic-button-image">
+						</div>
+					</div>
+					<div id="nav-container-top">
+						<img src="/images/slide1.png">
+						<br><br>
+						<div>Greycork<br>Home Try-out</div>
+					</div>
+					<div id="nav-container-bottom">
+						<div id="nav-play" class="nav-item">Play</div>
+						<div id="nav-instructions" class="nav-item">Instructions</div>
+						<div id="nav-store" class="nav-item">Store</div>
+						<div id="nav-blog" class="nav-item">Blog</div>
+						<div id="nav-privacy" class="nav-item">Privacy Policy</div>
+					</div>
+				</div>
+				
 				<!-- instructions/background-image TODO -->
 				<div id="instructions-container" class="active">
 					<div id="instructions">
@@ -154,24 +180,24 @@
         <div id="editor-bottom"> <!-- height 20vh -->
 
 					<!-- add sticker button -->
-          <div id="sticker-button" class="editor-bottom-button">
-          	<img src="/images/sticker-menu-icon.png">
+          <div id="sticker-button" class="generic-button">
+          	<img src="/images/sticker-menu-icon.png" class="generic-button-image">
           </div>
           
 					<!-- add trash canvas button -->
-          <div id="trash-button" class="editor-bottom-button">
-          	<img src="/images/trash-icon.png">
+          <div id="trash-button" class="generic-button">
+          	<img src="/images/trash-icon.png" class="generic-button-image">
           </div>
 
 	  		  <!-- Take picture button -->
-		  		<label id="camera-button" class="editor-bottom-button active">
-		  		  <img src="/images/camera-icon.png"/>
+		  		<label id="camera-button" class="generic-button active">
+		  		  <img src="/images/camera-icon.png" class="generic-button-image"/>
 		        <input type="file" accept="image/*" capture="camera" id="camera">
 		  		</label>
 
 					<!-- save image button -->
-          <div id="save-button" class="editor-bottom-button">
-          	<img src="/images/save-icon.png">
+          <div id="save-button" class="generic-button">
+          	<img src="/images/save-icon.png" class="generic-button-image">
           </div>
 
 					<!-- Show on download image page-->
@@ -248,14 +274,23 @@
 	      <img id="frame" width="0" height="0" style="display:none;">
 	  	</div>
 	  	
+	  <!--
 	  </div>
 	  
  		<div id="brim-mask">
- 		  <p>Hello, I am the <b>mask</b> element.</p>
-      <p>My purpose is to hide the <b>main</b> element when browser is not in the minimal view and give user instructions how to enter the minimal view.</p>
-      <p>Behind me is the <b>treadmill</b> element. It has been generated dynamically. It is used to give user plenty of space to scroll down.</p>
-      <p>Scroll down to hide me.</p>
+ 			<div id="brim-mask-content">
+	 			<img src="">
+	 			<div>Welcome to</div>
+	 			<div class="h3" style="margin-top:10px;">
+	 				Greycork's<br>Home Try-out app!
+	 			</div>
+	 			<br>
+	 			<div>Scroll down to begin.</div>
+ 			</div>
 		</div>
+		-->
+		
+		<!-- initialize brim 
 		<script>
 		  // user is using Safari
 			var scream, brim;
@@ -264,8 +299,8 @@
 			    window.addEventListener('DOMContentLoaded', function () {
 				    scream = gajus.Scream({
 				      width: {
-				        portrait: 320,
-				        landscape: 568
+				        portrait: window.innerWidth, //320,
+				        landscape: window.innerHeight //568
 				      }
 				    });
 				    
@@ -279,8 +314,8 @@
 			    });
 			  }
 		  }
-		</script>    
-		
+		</script>
+		-->
 		
 		<!-- deal with Landscape mode -->
 		<div id="landscape-overlay">

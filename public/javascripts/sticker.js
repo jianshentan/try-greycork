@@ -133,8 +133,8 @@ Sticker = function(imageSrc, containerElementSelector) {
     
     sticker.style[prefixedTransform] = 'translate('+posX+'px,'+posY+'px) rotate('+currentRotation+'deg) scale('+currentScale+') translateZ(0)';
     
-    velocityX = velocityX * 0.90;
-    velocityY = velocityY * 0.90;
+    velocityX = velocityX * 0.50;
+    velocityY = velocityY * 0.50;
     
     input.dragDX = 0;
     input.dragDY = 0;

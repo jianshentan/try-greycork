@@ -37,7 +37,8 @@ body {
   top: 0px;
   width: 100vw;
   height: 100vh;
-  background-color: blue;
+  background-image: url("../images/instructions_bg.png");
+  background-size: cover;
   color: white;
   display: none;
 }
@@ -174,15 +175,13 @@ body {
 /**
  * --------- Editor - Bottom ----------
  **/
-.editor-bottom-button {
+.generic-button {
   overflow: hidden;
   z-index: 120;
   color: red;
-  border: 2px solid #1991F4;
   border-radius: 50%;
   width: 15vw;
   height: 15vw;
-  background-color: #1991F4;
 }
 #sticker-button { /* left aligned */
   position: absolute;
@@ -190,6 +189,8 @@ body {
   top: 50%;
   transform: translateY(-50%);
   display: none;
+  background-color: #1991F4;
+  border: 2px solid #1991F4;
 }
 #save-button { /* right aligned */
   position: absolute;
@@ -198,6 +199,7 @@ body {
   transform: translateY(-50%);
   display: none;
   background-color: white !important;
+  border: 2px solid #1991F4;
 }
 #trash-button,
 #camera-button { /* centered */
@@ -206,11 +208,10 @@ body {
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
   display: none;
+  background-color: #1991F4;
+  border: 2px solid #1991F4;
 }
-#sticker-button img,
-#save-button img,
-#trash-button img,
-#camera-button img {
+.generic-button-image {
   margin-left: 2.0vw;
   margin-top: 1.8vw;
   width: 10vw;
@@ -346,6 +347,46 @@ li.slide {
 }
 
 /**
+ * ------------ Nav -------------
+ **/
+#nav-button {
+  position: absolute;
+}
+#nav-container {
+  background-color: white;
+  width: 70vw;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  z-index: 300;
+  position: fixed;
+  color: #333;
+}
+#nav-container-close {
+  background-color: #ccc;
+  height: 15vw;
+}
+#nav-container-top {
+  position: absolute;
+  width: 70vw;
+  top: 15vw;
+  text-align: center;
+  font-size: 1.5em;
+  margin-top: 5vw;
+}
+#nav-container-top img {
+  width: 50vw;
+}
+#nav-container-bottom {
+  position: absolute;
+  bottom: 2vh;
+}
+.nav-item {
+  font-size: 1.2em;
+  padding: 0 0 2.5vw 5vw;
+}
+
+/**
  * background blue gradient
  **/
 .blue-gradient-bg {
@@ -372,5 +413,11 @@ li.slide {
   background: #663399; 
   pointer-events: none;
   z-index: 801 !important;
-  padding: 20px;
+}
+#brim-mask-content {
+  width: 80%;
+  left: 10%;
+  position: absolute;
+  text-align: center;
+  margin-top: 24px;
 }
