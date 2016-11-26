@@ -92,23 +92,30 @@ body {
 #download-overlay-menu-bar {
   height: 10vh;
   color: white;
-  line-height: 10vh;
+  /*line-height: 10vh;*/
   text-align: center;
 }
 #sticker-menu-bar {
   border-bottom: 1px solid white;
+  position: relative;
 }
 #sticker-menu-bar-back,
 #download-overlay-menu-bar-back {
   position: absolute;
-  left: 5vw;
+  left: 3vw;
   line-height: 10vh;
 }
 #sticker-menu-bar-back img,
 #download-overlay-menu-bar-back img {
   height: 10vw;
 }
-
+#sticker-menu-bar-label {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 80%;
+}
 #sticker-menu-stickers {
   padding-left:5vw;
   padding-right:5vw; 

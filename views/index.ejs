@@ -100,7 +100,7 @@
 				<div>Greycork<br>Home Try-out</div>
 			</div>
 			<div id="nav-container-bottom">
-				<div id="nav-play" class="nav-item">Play</div>
+				<div id="nav-play" class="nav-item">Start Over</div>
 				<div id="nav-instructions" class="nav-item">Instructions</div>
 				<div id="nav-store" class="nav-item">Store</div>
 				<div id="nav-blog" class="nav-item">Blog</div>
@@ -175,7 +175,10 @@
 				    	<img src="/images/slide4.png">
 				    	<br><br>
 				    	<div class="" style="font-size: 1.5em;">
-				    		Rotate, scale, and translate, your stickers.
+				    		Rotate, scale, and move your stickers.
+				    	</div>
+				    	<div class="" style="font-size: 1.0em;">
+				    		(Hold the 'shift-key' to <strong>rotate</strong> & <strong>scale</strong>)
 				    	</div>
 				    </div>
 				  </li>
@@ -217,9 +220,9 @@
         	<img src="/images/sticker-menu-icon.png" class="generic-button-image">
         </div>
         
-        <!-- add reset sticker button -->
-        <div id="reset-sticker-button" class="generic-button">
-        	<img src="/images/reset-sticker-icon.png" class="generic-button-image">
+        <!-- add remove sticker button -->
+        <div id="remove-sticker-button" class="generic-button">
+        	<img src="/images/remove-sticker-icon.png" class="generic-button-image">
         </div>
         
 				<!-- add trash canvas button -->
@@ -240,45 +243,17 @@
 
 				<!-- Show on download image page-->
 				<div id="promocode-container">
-					<!--<div id="promocode">123-789</div>-->
 					<div id="promocode-content">
-						Looks like you're ready to check out
-						<br>
-						<a href="" style="color:white;text-decoration:underline">the Greycork store &rarr;</a>
+						<a id="download-image-url" href="" download="try-greycork.png"><div id="download-image-button">Download your image</div></a>
+						<div class="">
+							Looks like you're ready to check out
+							<a href="" style="color:white;text-decoration:underline">the Greycork store &rarr;</a>
+						</div>
 					</div>
 				</div>
+				
   		</div>
-
-  		<!-- download image -->
-  		<div id="download-overlay">
-  			<div id="download-overlay-menu-bar">
-  				<div id="download-overlay-menu-bar-back">
-  					<img src="/images/back-icon.png">
-  				</div>
-  				<div id="download-overlay-menu-bar-label">
-  					Go back to edit image
-  				</div>
-  			</div>
-  			<div id="download-overlay-content">
-  				<div class="" style="font-size: 1.6em;">
-  					Tap and hold the image to download to your device!
-  				</div>
-  				<br>
-  				<img src="/images/tap-icon.png" style="width:20vw;">
-  				<br>
-  				<br>
-  				<div class="row">
-  					<div class="col-xs-2">
-  						<input type="checkbox" id="share-download" value="">
-  					</div>
-	  				<div class="col-xs-10" style="font-size:0.9em;text-align:left;text-transform:uppercase;">
-	  					Proud of your work? Share is with the Greycork team for a chance to be featured on the Greycork Catalog.
-	  				</div>
-  				</div>
-  			</div>
-  			<div id="download-overlay-ok-button">Save Image!</div>
-  		</div>
-  		
+ 		
       <img id="frame" width="0" height="0" style="display:none;">
   	</div>
 		
