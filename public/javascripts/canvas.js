@@ -196,19 +196,20 @@ $(window).on("uploadImage", function(e, p1, p2) {
   // Trash Button on click
   $("#"+TRASH_BUTTON_ID).off('click');
   $("#"+TRASH_BUTTON_ID).click(function() {
-    /*
-    if (confirm("Are you sure you want to discard your image and start again?")) {
-      $(window).trigger("deleteImage");  
-    }
-    */
-    var msg = "Are you sure you want to discard your image and start again?";
-    $(window).trigger("notification", [ 
-      msg, 
-      true, 
-      function(){
+    if (mobile) {
+      if (confirm("Are you sure you want to discard your image and start again?")) {
         $(window).trigger("deleteImage");  
       }
-    ]);
+    } else {
+      var msg = "Are you sure you want to discard your image and start again?";
+      $(window).trigger("notification", [ 
+        msg, 
+        true, 
+        function(){
+          $(window).trigger("deleteImage");  
+        }
+      ]);
+    }
   });
  
 });
@@ -355,7 +356,6 @@ $(window).on("saveImage", function(e) {
     stickerStack[i].deleteSticker(); 
   }
   stickerStack = [];
- 
   
   if (!mobile) {
     // automatic download if desktop
@@ -386,6 +386,7 @@ $(window).on("deleteImage", function(e, p1, p2) {
   $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
   $("#"+RESET_STICKER_BUTTON_ID).removeClass("active"); // hide reset button on desktop only
   $("#"+INSTRUCTIONS_CONTAINER_ID).addClass("active"); // show sticker button
+  $("#"+SAVE_BUTTON_ID).removeClass('active'); // hide download button
  
 });
 

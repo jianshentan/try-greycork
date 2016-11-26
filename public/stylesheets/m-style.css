@@ -19,6 +19,7 @@ body {
 #editor-middle {
   position: relative;
   overflow-x: hidden; 
+  overflow-y: hidden; 
   height: 80vh;
   width: 100vw;
   background-color: rgba(0,0,0,0.1);
