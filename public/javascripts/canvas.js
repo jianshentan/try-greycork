@@ -272,9 +272,14 @@ $(window).on("showStickerMenu", function(e, p1, p2) {
     $("."+STICKER_ICON_CLASS).each(function() {
       //$(this).unbind('click');
       $(this).on('click', function(){
-        // add new sticker to canvas
-        var path = $(this).attr("src");
-        stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
+        if (isCanvasBlank(document.getElementById(CANVAS_ID))) {
+          var msg = "You need to upload an image before you can add stickers!";
+          $(window).trigger("notification", [ msg, false, null ]);     
+        } else {
+          // add new sticker to canvas
+          var path = $(this).attr("src");
+          stickerStack.push(new Sticker(path, "#"+EDITOR_CONTAINER_ID));
+        }
       });
     });
   }
@@ -339,9 +344,24 @@ $(window).on("saveImage", function(e) {
   $("#"+EDITOR_CONTAINER_ID).append(img);
   $("#"+SAVE_BUTTON_ID).off();
   
-  // trigger the download overlay
-  $(window).trigger("openDownloadOverlay", [ /* param1, param2 */]);
+  // reset canvas
+  var canvas = document.getElementById(CANVAS_ID);
+  $(canvas).css("width", "100vw");
+  $(canvas).remove();
+  $("#"+EDITOR_CONTAINER_ID).append($("<canvas id='canvas'></canvas>"));
+  
+  // empty sticker stack and delete each sticker
+  for (var i in stickerStack) {
+    stickerStack[i].deleteSticker(); 
+  }
+  stickerStack = [];
  
+  
+  if (!mobile) {
+    // automatic download if desktop
+    
+  }
+  
 });
 
 /**
@@ -361,9 +381,7 @@ $(window).on("deleteImage", function(e, p1, p2) {
   }
   stickerStack = [];
   
-  // hide sticker-menu-button, trash-button and save-button, but show camera-button
-  $("#"+SAVE_BUTTON_ID).removeClass("active"); // show save button
-  $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
+  // hide sticker-menu-button, trash-button and save-button, but show camera-button $("#"+SAVE_BUTTON_ID).removeClass("active"); // show save button $("#"+TRASH_BUTTON_ID).removeClass("active"); // show trash icon
   $("#"+CAMERA_BUTTON_ID).addClass("active"); // hide camera icon
   $("#"+STICKER_BUTTON_ID).removeClass("active"); // show sticker button
   $("#"+RESET_STICKER_BUTTON_ID).removeClass("active"); // hide reset button on desktop only
@@ -375,34 +393,43 @@ $(window).on("deleteImage", function(e, p1, p2) {
  * EVENT: 'openDownloadOverlay'
  **/ 
 $(window).on('openDownloadOverlay', function(e, p1, p2) {
-  $("#"+DOWNLOAD_OVERLAY_ID).slideDown(function() {
-    $("#"+DOWNLOAD_OVERLAY_ID).addClass('active');
-  });
-  
-  var isChecked = $("#"+SHARE_CHECKBOX_ID).is(":checked");
-  
-  // download the image!
-  $("#"+DOWNLOAD_BUTTON_ID).off('click');
-  $("#"+DOWNLOAD_BUTTON_ID).click(function() {
-    if (isChecked) {
-      // send image off to server...
-      // TODO
-    }      
-    $(window).trigger("saveImage");
-    $(window).trigger("closeDownloadOverlay");
-  });
-  
-  // clicked on back button
-  $("#"+DOWNLOAD_BACK_BUTTON_ID).off('click');
-  $("#"+DOWNLOAD_BACK_BUTTON_ID).click(function() {
-    
-    $("#"+DOWNLOAD_BUTTON_ID).unbind('click');
-    
-    $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
-      $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
+  if (mobile) {
+    $("#"+DOWNLOAD_OVERLAY_ID).slideDown(function() {
+      $("#"+DOWNLOAD_OVERLAY_ID).addClass('active');
     });
     
-  });
+    var isChecked = $("#"+SHARE_CHECKBOX_ID).is(":checked");
+    
+    // download the image!
+    $("#"+DOWNLOAD_BUTTON_ID).off('click');
+    $("#"+DOWNLOAD_BUTTON_ID).click(function() {
+      if (isChecked) {
+        // send image off to server...
+        // TODO
+      }      
+      $(window).trigger("saveImage");
+      $(window).trigger("closeDownloadOverlay");
+    });
+    
+    // clicked on back button
+    $("#"+DOWNLOAD_BACK_BUTTON_ID).off('click');
+    $("#"+DOWNLOAD_BACK_BUTTON_ID).click(function() {
+      
+      $("#"+DOWNLOAD_BUTTON_ID).unbind('click');
+      
+      $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
+        $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
+      });
+      
+    });
+  } else {
+    var msg = "Once you choose to download your image, you can't go back to edit it. Are you sure ready to save your image?";
+    $(window).trigger("notification", [ msg, true, function() {
+      // download
+      $(window).trigger("saveImage");
+      $(window).trigger("closeDownloadOverlay");
+    }]);     
+  }
   
 });
 
@@ -417,10 +444,14 @@ $(window).on('closeDownloadOverlay', function(e, p1, p2) {
   $("#"+STICKER_BUTTON_ID).removeClass("active"); // hide sticker button
   $("#"+RESET_STICKER_BUTTON_ID).removeClass("active"); // hide reset button on desktop only
  
-  $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
-    $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
+  if (mobile) {
+    $("#"+DOWNLOAD_OVERLAY_ID).slideUp(function() {
+      $("#"+DOWNLOAD_OVERLAY_ID).removeClass('active');
+      $("#"+PROMOCODE_CONTAINER_ID).addClass('active');
+    });
+  } else {
     $("#"+PROMOCODE_CONTAINER_ID).addClass('active');
-  });
+  }
 });
 
 /**
@@ -445,7 +476,7 @@ $(window).on('notification', function(e, text, isOption, cb) {
     $("#"+NOTIFICATION_CONFIRM_OK_BUTTON_ID).off();
     $("#"+NOTIFICATION_CONFIRM_OK_BUTTON_ID).click(function() {
       $("#"+NOTIFICATION_ID).removeClass("active");        
-      if (cb) { cb() };
+      if (cb) { cb(); }
     });
     
     // cancel
@@ -461,12 +492,10 @@ $(window).on('notification', function(e, text, isOption, cb) {
     $("#"+NOTIFICATION_ALERT_OK_BUTTON_ID).off();
     $("#"+NOTIFICATION_ALERT_OK_BUTTON_ID).click(function() {
       $("#"+NOTIFICATION_ID).removeClass("active");        
-      if (cb) { cb() };
+      if (cb) { cb(); }
     });
   }
 });
-
-
 
 
 

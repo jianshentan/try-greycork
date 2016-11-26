@@ -28,26 +28,81 @@ $(document).ready(function () {
       $(".slider-nav[data-index='"+slideIndex+"']").addClass("active");
     });
     
-    // skip tutorial
-    $("#skip-tutorial").click(function() {
-      $("#slider").slideUp();  
-      localStorage.setItem("skippedTutorial", "true");
+  } else {
+    var leftSlider = $("#slider-left");
+    var rightSlider = $("#slider-right");
+    rightSlider.show();
+    
+    rightSlider.click(function() {
+      leftSlider.show();
+      
+      var currNav = $(".slider-nav.active");
+      var nextNav = currNav.next(".slider-nav");
+      currNav.removeClass("active");
+      nextNav.addClass("active"); 
+      if (nextNav.is(":last-child")) {
+        rightSlider.hide();
+      }
+      
+      var currSlide = $(".slide-content.active");
+      var nextSlide = currSlide.parent().next("li").find(".slide-content");
+      currSlide.fadeOut(function() {
+        currSlide.removeClass("active");
+        nextSlide.fadeIn(function(){
+          nextSlide.addClass("active");
+        });  
+      });
+      
     });
     
-    // complete tutorial
-    $("#play-now").click(function() {
-      $("#slider").slideUp();  
-      localStorage.setItem("completedTutorial", "true");
+    leftSlider.click(function() {
+      rightSlider.show();
+      
+      var currNav = $(".slider-nav.active");
+      var prevNav = currNav.prev(".slider-nav");
+      currNav.removeClass("active");
+      prevNav.addClass("active"); 
+      if (prevNav.is(":first-child")) {
+        leftSlider.hide();
+      }
+      
+      var currSlide = $(".slide-content.active");
+      var prevSlide = currSlide.parent().prev("li").find(".slide-content");
+      currSlide.fadeOut(function() {
+        currSlide.removeClass("active");
+        prevSlide.fadeIn(function() {
+          prevSlide.addClass("active");  
+        });
+      });
     });
     
-    // unless skippedTutorial or completedTutorial, show tutorial
-    if (localStorage.getItem("completedTutorial") == "true" ||
-        localStorage.getItem("skippedTutorial") == "true") {
-      $("#slider").hide();
-    } else {
-      $("#slider").show();
-    }
+    var slides = [];
+    $(".slider-nav").each(function() {
+      slides.push($(this).data("index"));
+    });
+    
   }
+  
+  // skip tutorial
+  $("#skip-tutorial").click(function() {
+    $("#slider").slideUp();  
+    localStorage.setItem("skippedTutorial", "true");
+  });
+  
+  // complete tutorial
+  $("#play-now").click(function() {
+    $("#slider").slideUp();  
+    localStorage.setItem("completedTutorial", "true");
+  });
+  
+  // unless skippedTutorial or completedTutorial, show tutorial
+  if (localStorage.getItem("completedTutorial") == "true" ||
+      localStorage.getItem("skippedTutorial") == "true") {
+    $("#slider").hide();
+  } else {
+    $("#slider").show();
+  }
+    
   
   /**
    * ----------- Nav bar------------
@@ -94,8 +149,15 @@ $(document).ready(function () {
 });
    
 function clearCache(cb) {
-  localStorage.setItem("completeTutorial", "false");
+  localStorage.setItem("completedTutorial", "false");
   localStorage.setItem("skippedTutorial", "false");
   cb();
 }
- 
+
+function isCanvasBlank(canvas) {
+  var blank = document.createElement('canvas');
+  blank.width = canvas.width;
+  blank.height = canvas.height;
+
+  return canvas.toDataURL() == blank.toDataURL();
+}
