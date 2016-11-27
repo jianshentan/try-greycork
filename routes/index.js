@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var azure = require('azure-storage');
 var fs = require('fs');
+var os = require('os');
 
 var blobSvc = azure.createBlobService();
 var RAW_IMAGES_CONTAINER = 'raw-images';
@@ -49,7 +50,7 @@ router.get('/privacy', function(req, res, next) {
 router.post('/raw-image', function(req, res, next) {
   var image = req.body.image.replace(/^data:image\/png;base64,/, "");
   var fileId = "raw-" + req.body.fileId;
-  var path = '/tmp/' + fileId;
+  var path = os.tmpdir() + '/' + fileId;
   
   fs.writeFile(path, image, 'base64', function(err) {
     if (!err) {
@@ -68,7 +69,7 @@ router.post('/raw-image', function(req, res, next) {
 router.post('/edited-image', function(req, res, next) {
   var image = req.body.image.replace(/^data:image\/png;base64,/, "");
   var fileId = "edited-" + req.body.fileId;
-  var path = '/tmp/'+fileId;
+  var path = os.tmpdir() + '/' +fileId;
   
   fs.writeFile(path, image, 'base64', function(err) {
     if (!err) {
