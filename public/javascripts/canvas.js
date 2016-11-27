@@ -40,6 +40,7 @@ var NOTIFICATION_CONFIRM_CANCEL_BUTTON_ID = 'notification-confirm-cancel';
 
 var SIZE_MULTIPLIER = 2; // how much to scale the downloaded/saved image 
 var stickerStack = []; // stack of active stickers
+var storedFileId = ''; // storedFileId
 
 $(document).ready(function() {
 
@@ -52,6 +53,7 @@ $(document).ready(function() {
   
   camera.addEventListener('change', function(e) {
     var file = e.target.files[0]; 
+    var fileName = file.name;
     
     loadImage.parseMetaData(file, function(data) {
       var options = { 
@@ -65,6 +67,19 @@ $(document).ready(function() {
         options.orientation = data.exif.get('Orientation');
       }
       loadImage(file, function(tempCanvas) {
+        
+        // send file to server so that this raw image can be stored
+        var data = tempCanvas.toDataURL('image/png');
+        var d = new Date();
+        
+        // fileId: raw-mm/dd/yyyy-time-<fileName>
+        var fileId = d.getMonth() + "" +
+                     d.getDate() + "" +
+                     d.getYear() + "-" + 
+                     d.getTime() + "-" + fileName;
+                     
+        storedFileId = fileId;
+        $.post("/raw-image", { image: data, fileId: storedFileId }, function(data) {});
         
         /**
          * We need to draw the resulting canvas (tempCanvas) into
@@ -319,7 +334,7 @@ $(window).on("saveImage", function(e) {
   }
   
   // convert to image
-  var dataURL = destinationCanvas.toDataURL();  
+  var dataURL = destinationCanvas.toDataURL('image/png');  
   $(destinationCanvas).css("display", "none");
   var img = document.getElementById(SAVED_IMAGE_ID);
   img.src = dataURL;
@@ -343,6 +358,11 @@ $(window).on("saveImage", function(e) {
   
   $("#"+EDITOR_CONTAINER_ID).append(img);
   $("#"+SAVE_BUTTON_ID).off();
+  
+  // send original image, stickers and final image to the server
+  $.post("/edited-image", 
+    { image: dataURL, fileId: storedFileId }, 
+    function() {});
   
   // reset canvas
   var canvas = document.getElementById(CANVAS_ID);
