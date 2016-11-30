@@ -35,7 +35,7 @@ Sticker = function(imageSrc, containerElementSelector) {
       touchStartAngle: 0
   };
   var prefixedTransform;
-  var currentScale = 1;
+  var currentScale = 0.5;
   var currentRotation = 0;
   var posX = 0;
   var posY = 0;

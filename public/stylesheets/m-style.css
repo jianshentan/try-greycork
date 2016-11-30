@@ -333,6 +333,15 @@ body {
   text-align: center;
   color: white;
 }
+#slider-swipe-right {
+  color: white;
+  font-size: 1.0em;
+  text-transform: uppercase;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20vh;
+}
 ul {
   margin: 0;
   padding: 0;

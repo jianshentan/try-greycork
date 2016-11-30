@@ -55,6 +55,9 @@ $(document).ready(function() {
     var file = e.target.files[0]; 
     var fileName = file.name;
     
+    // trick to make sure element is fired even when same file is selected
+    $("#"+CAMERA_ID).val("");
+    
     loadImage.parseMetaData(file, function(data) {
       var options = { 
         canvas: true, 
@@ -123,22 +126,22 @@ $(document).ready(function() {
    **/
     
   var stickerPaths = [
-    "/images/stickers/bookshelf_main.png",
-    "/images/stickers/chaise_sticker.png",
-    "/images/stickers/coffee_table_main.png",
-    "/images/stickers/person_book.png",
-    "/images/stickers/bookshelf_main.png",
-    "/images/stickers/chaise_sticker.png",
-    "/images/stickers/coffee_table_main.png",
-    "/images/stickers/person_book.png",
-    "/images/stickers/sectional_sticker.png",
-    "/images/stickers/side_table_gallery.png",
-    "/images/stickers/sofa_sticker.png",
-    "/images/stickers/carrying_couch.png",
-    "/images/stickers/dog_sticker.png",
-    "/images/stickers/donut_stack.png",
-    "/images/stickers/donut_stack2.png",
-    "/images/stickers/bialetti.png"
+    "/images/stickers/additional-coffeepot-0.png",
+    "/images/stickers/additional-greycorkbowl-0.png",
+    "/images/stickers/additional-plant-0.png",
+    "/images/stickers/bookshelfshort-0.png",
+    "/images/stickers/bookshelftall-0.png",
+    "/images/stickers/bookshelftall-1.png",
+    "/images/stickers/chaise-0.png",
+    "/images/stickers/chaise-1.png",
+    "/images/stickers/coffeetable-0.png",
+    "/images/stickers/coffeetable-1.png",
+    "/images/stickers/sectional-0.png",
+    "/images/stickers/sidetable-0.png",
+    "/images/stickers/sofa-0.png",
+    "/images/stickers/sofa-1.png",
+    "/images/stickers/sofa-2.png",
+    "/images/stickers/sofa-3.png"
   ];
   var stickersContainer = $("#"+STICKER_MENU_STICKERS_ID);
   

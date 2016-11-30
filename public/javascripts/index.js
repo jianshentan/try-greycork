@@ -8,6 +8,7 @@ $(document).ready(function () {
   if (mobile) {
     var carousel;
     carousel = $("ul");
+    var totalSlides = $(".slider-nav").length;
     
     // initialize carousel
     carousel.itemslide({
@@ -22,10 +23,20 @@ $(document).ready(function () {
     // detect carousel index to update nav
     carousel.on('changePos', function(e) {
       var slideIndex = carousel.getActiveIndex();
+
+      // hide all other slide nav circles
       $(".slider-nav").each(function(){
         $(this).removeClass("active");
       });
+      // show the circle 
       $(".slider-nav[data-index='"+slideIndex+"']").addClass("active");
+      
+      // show/hide 'slide-right' label depending on slide position
+      if (slideIndex == totalSlides-1) {
+        $("#slider-swipe-right").hide();
+      } else {
+        $("#slider-swipe-right").show();
+      }
     });
     
   } else {
@@ -46,9 +57,9 @@ $(document).ready(function () {
       
       var currSlide = $(".slide-content.active");
       var nextSlide = currSlide.parent().next("li").find(".slide-content");
-      currSlide.fadeOut(function() {
+      currSlide.fadeOut(200, function() {
         currSlide.removeClass("active");
-        nextSlide.fadeIn(function(){
+        nextSlide.fadeIn(200, function(){
           nextSlide.addClass("active");
         });  
       });
@@ -68,9 +79,9 @@ $(document).ready(function () {
       
       var currSlide = $(".slide-content.active");
       var prevSlide = currSlide.parent().prev("li").find(".slide-content");
-      currSlide.fadeOut(function() {
+      currSlide.fadeOut(200, function() {
         currSlide.removeClass("active");
-        prevSlide.fadeIn(function() {
+        prevSlide.fadeIn(200, function() {
           prevSlide.addClass("active");  
         });
       });
